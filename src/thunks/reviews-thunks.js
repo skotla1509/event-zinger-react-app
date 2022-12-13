@@ -7,7 +7,7 @@ export const createReviewThunk = createAsyncThunk(
 )
 export const findReviewsByEventIdThunk = createAsyncThunk(
     'findReviewsByEventId',
-    async (imdbID) => findReviewsByEventId(imdbID)
+    async (eventId) => findReviewsByEventId(eventId)
 
 )
 export const findReviewsByAuthorThunk = createAsyncThunk(

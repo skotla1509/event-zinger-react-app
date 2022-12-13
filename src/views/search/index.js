@@ -1,12 +1,13 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {findEventsBySearchTermThunk} from "../../thunks/search-thunks";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('Sports');
   const {events, loading} = useSelector((state) => state.search);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(findEventsBySearchTermThunk(searchTerm))
   }, []);
@@ -36,7 +37,7 @@ const Search = () => {
               <li key={event.id} className="list-group-item">
                   <div className="row align-items-center">
                       <div className="col-2">
-                          <img src={event.img} className="card-img-top rounded" height="100px" width="100px"/>
+                          <img src={event.img} className="card-img-top rounded" height="100px" width="100px" alt=""/>
                       </div>
 
                       <div className="col-2">
@@ -46,15 +47,19 @@ const Search = () => {
                       </div>
 
                       <div className="col-6">
-                          <Link to={`/details/${event.imdbID}`} className="text-dark">
+                          <Link to={`/details/${event.id}`} className="text-dark">
                               <strong>{event.name}</strong>
                           </Link>
-                          <div className="col" className="text-secondary">
+                          <div className="text-secondary">
                               {event.location}
                           </div>
                       </div>
                       <div className="col-2">
-                          <button type="button" className="float-end btn btn-primary">Details</button>
+                          <button type="button"
+                                  onClick={() => {
+                                    navigate(`/details/${event.id}`)
+                                  }}
+                                  className="float-end btn btn-primary">Details</button>
                       </div>
                   </div>
               </li>
