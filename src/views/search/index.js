@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {findEventsBySearchTermThunk} from "../../thunks/search-thunks";
 
 const Search = () => {
-  const [searchTerm, setSearchTerm] = useState('Music');
+  const [searchTerm, setSearchTerm] = useState('Sports');
   const {events, loading} = useSelector((state) => state.search);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,19 +33,34 @@ const Search = () => {
           events
           && events.map(
             (event) =>
-              <li key={event.imdbID} className="list-group-item">
-                <i className="float-end bi bi-hand-thumbs-up"></i>
-                <i className="float-end bi bi-hand-thumbs-down me-2"></i>
-                <Link to={`/details/${event.imdbID}`}>
-                  {event.name}
-                </Link>
+              <li key={event.id} className="list-group-item">
+                  <div className="row align-items-center">
+                      <div className="col-2">
+                          <img src={event.img} className="card-img-top rounded" height="100px" width="100px"/>
+                      </div>
+
+                      <div className="col-2">
+                          <div style={{color: "rgb(144,78,186)"}}>
+                              <strong>{event.date}</strong>
+                          </div>
+                      </div>
+
+                      <div className="col-6">
+                          <Link to={`/details/${event.imdbID}`} className="text-dark">
+                              <strong>{event.name}</strong>
+                          </Link>
+                          <div className="col" className="text-secondary">
+                              {event.location}
+                          </div>
+                      </div>
+                      <div className="col-2">
+                          <button type="button" className="float-end btn btn-primary">Details</button>
+                      </div>
+                  </div>
               </li>
           )
         }
       </ul>
-      <pre>
-                {JSON.stringify(events, null, 2)}
-      </pre>
     </>
   )
 }
