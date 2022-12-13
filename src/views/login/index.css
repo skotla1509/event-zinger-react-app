@@ -1,0 +1,9 @@
+.wd-v-align-center {
+    align-self: center;
+}
+
+.wd-image-caption {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
