@@ -10,6 +10,7 @@ import CurrentUser from "./current-user";
 import Navigation from "./navigation";
 import Profile from "./profile";
 import Search from "./search";
+import Details from "./search/details";
 import usersReducer from "../reducers/users-reducer";
 import searchReducer from "../reducers/search-reducer";
 import reviewsReducer from "../reducers/reviews-reducer";
@@ -34,6 +35,7 @@ function Tuiter() {
               <Route index element={<Home/>}/>
               <Route path="/profile" element={<Profile/>}/>
               <Route path="/search" element={<Search/>}/>
+              <Route path="/details/:eventId" element={<Details/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>
             </Routes>

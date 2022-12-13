@@ -7,5 +7,5 @@ export const findEventsBySearchTermThunk = createAsyncThunk(
 )
 export const findEventByIdThunk = createAsyncThunk(
     'findEventById',
-    (imdbID) => findEventById(imdbID)
+    (eventId) => findEventById(eventId)
 )
