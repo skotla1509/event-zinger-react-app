@@ -10,6 +10,12 @@ export class UserRoles {
     static SYSTEM_ADMIN = "ADMINISTRATOR";
 }
 
+export class Gender {
+    static MALE = "MALE";
+    static FEMALE = "FEMALE";
+    static PREFERRED_NOT_TO_SAY = "PREFERRED_NOT_TO_SAY";
+}
+
 export class Helper {
     static formatDate = (date) => {
         const dateObj = new Date(date + "T12:00:00Z");

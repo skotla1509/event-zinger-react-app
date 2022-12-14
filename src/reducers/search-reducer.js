@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {findEventByIdThunk, findEventsBySearchTermThunk} from "../thunks/search-thunks";
+import {findEventDetailsByIdThunk, findEventsBySearchTermThunk} from "../thunks/search-thunks";
 
 const initialState = {
 	events: [],
@@ -22,14 +22,14 @@ const searchReducer = createSlice(
 			[findEventsBySearchTermThunk.rejected]: (state, action) => {
 				state.loading = false;
 			},
-			[findEventByIdThunk.pending]: (state, action) => {
+			[findEventDetailsByIdThunk.pending]: (state, action) => {
 				state.loading = true;
 			},
-			[findEventByIdThunk.fulfilled]: (state, action) => {
+			[findEventDetailsByIdThunk.fulfilled]: (state, action) => {
 				state.details = parseDetails(action.payload);
 				state.loading = false;
 			},
-			[findEventByIdThunk.rejected]: (state, action) => {
+			[findEventDetailsByIdThunk.rejected]: (state, action) => {
 				state.loading = false;
 			},
 		}
@@ -44,6 +44,7 @@ const parseDetails = (payload) => {
 
 	return {
 		name: payload.name,
+		id: payload.id,
 		img: imageObj ? imageObj.url : '',
 		date: datesObj ? datesObj.localDate : "TBA",
 		address: locationObj.address.line1,

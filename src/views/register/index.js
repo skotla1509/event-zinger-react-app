@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from "react-router-dom";
 import Required from "../components/required";
-import {UserRoles} from "../../constants/constants";
+import {Gender, UserRoles} from "../../constants/constants";
 import {Navigate} from "react-router";
 import {registerThunk} from "../../thunks/users-thunks";
 import {setErrorMessage} from "../../reducers/users-reducer";
@@ -13,6 +13,7 @@ const Register = () => {
     {
       firstName: '',
       lastName: '',
+      gender: '',
       addressLine1: '',
       addressLine2: '',
       city: '',
@@ -33,7 +34,7 @@ const Register = () => {
   const goToNextPage = () => {
     const error = validateFormPage1(user);
     if (error) {
-      setErrorMessage(error);
+      dispatch(setErrorMessage(error));
     } else {
       dispatch(setErrorMessage(""));
       setPage(page + 1);
@@ -52,6 +53,7 @@ const Register = () => {
       dispatch(setErrorMessage(error));
     } else {
       dispatch(setErrorMessage(""));
+      user.avatar = (user.gender === Gender.MALE) ? "male-avatar.png" : "female-avatar.png";
       dispatch(registerThunk(user));
     }
   };
@@ -119,6 +121,40 @@ const Register = () => {
                              onChange={(e) => updateFormData("lastName",
                                                              e.target.value)}
                              placeholder="Enter last name"/>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className={`col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ${spaceBetween}`}>
+                      <span>Gender </span>
+                      <Required/>
+                    </div>
+                    <div className={`col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2 ${spaceBetween}`}>
+                      <div className="form-check form-check-inline m-1">
+                        <input className="form-check-input"
+                               type="radio"
+                               name="register-gender" id="male"
+                               onClick={() => updateFormData("gender",
+                                                             Gender.MALE)}
+                               value={Gender.MALE}/>
+                        <label className="form-check-label"
+                               htmlFor="register-gender">
+                          Male
+                        </label>
+                      </div>
+                    </div>
+                    <div className={`col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2 ${spaceBetween}`}>
+                      <div className="form-check form-check-inline m-1">
+                        <input className="form-check-input"
+                               type="radio"
+                               name="register-gender" id="female"
+                               onClick={() => updateFormData("gender",
+                                                             Gender.FEMALE)}
+                               value={Gender.FEMALE}/>
+                        <label className="form-check-label"
+                               htmlFor="register-gender">
+                          Female
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row">
@@ -350,6 +386,9 @@ const validateFormPage1 = (formData) => {
   }
   if (!formData.lastName) {
     errorMessage += "Last Name is missing! ";
+  }
+  if (!formData.gender) {
+    errorMessage += "Gender is missing! ";
   }
   if (!formData.addressLine1) {
     errorMessage += "Address Line 1 is missing! ";

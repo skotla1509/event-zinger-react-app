@@ -13,14 +13,20 @@ import Search from "./search";
 import Details from "./search/details";
 import usersReducer from "../reducers/users-reducer";
 import searchReducer from "../reducers/search-reducer";
-import reviewsReducer from "../reducers/reviews-reducer";
+import commentsReducer from "../reducers/comments-reducer";
+import interestsReducer from "../reducers/people-interested-reducer";
+import eventsReducer from "../reducers/events-reducer";
+import ViewProfile from "./profile/view-profile";
+import EditProfile from "./profile/edit-profile";
 
 const store = configureStore(
   {
     reducer: {
       users: usersReducer,
       search: searchReducer,
-      reviews: reviewsReducer
+      allEvents: eventsReducer,
+      comments: commentsReducer,
+      interests: interestsReducer
     }
   }
 )
@@ -33,7 +39,8 @@ function Tuiter() {
         <Navigation/>
             <Routes>
               <Route index element={<Home/>}/>
-              <Route path="/profile" element={<Profile/>}/>
+              <Route path="/profile/:userId" element={<ViewProfile/>}/>
+              <Route path="/edit-profile/:userId" element={<EditProfile/>}/>
               <Route path="/search" element={<Search/>}/>
               <Route path="/details/:eventId" element={<Details/>}/>
               <Route path="/login" element={<Login/>}/>

@@ -10,7 +10,7 @@ export const findEventsBySearchTerm = async (term) => {
     return response.data;
 }
 
-export const findEventById = async (eventId) => {
+export const findEventDetailsById = async (eventId) => {
     const URL = DETAILS_BASE_URL + eventId + ".json?" + API_KEY;
     const response = await axios.get(URL)
     return response.data

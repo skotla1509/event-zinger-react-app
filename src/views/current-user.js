@@ -3,7 +3,6 @@ import React, {useEffect} from "react";
 import {profileThunk} from "../thunks/users-thunks";
 
 const CurrentUser = ({children}) => {
-    const {currentUser} = useSelector((state) => state.users)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(profileThunk())

@@ -13,7 +13,7 @@ import {
 import {Helper} from "../../constants/constants";
 import {profileThunk} from "../../thunks/users-thunks";
 
-const Details = () => {
+const EditProfile = () => {
 	const {eventId} = useParams()
 	const [comment, setReview] = useState('')
 	const {comments} = useSelector((state) => state.comments);
@@ -22,7 +22,6 @@ const Details = () => {
 	const {currentUser} = useSelector((state) => state.users)
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log("USEEEEEEEEEEEEEEEEEE");
 		dispatch(profileThunk())
 		dispatch(findEventDetailsByIdThunk(eventId))
 		dispatch(findCommentsByEventIdThunk(eventId))
@@ -257,4 +256,4 @@ const Details = () => {
 		</div>
 	)
 }
-export default Details
+export default EditProfile

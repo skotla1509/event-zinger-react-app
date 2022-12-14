@@ -36,7 +36,7 @@ On searching for anything on the `/` page on getting successful data from the AP
 
 ![search image](https://raw.githubusercontent.com/codedamn-projects/ticket-master-clone/master/designs/Search.png)
 
-### Details
+### ViewProfile
 
 All the details retrieved from the API can be shown in the drop down menu of the event. 
 
@@ -51,7 +51,7 @@ Please generate an API Key for using the API
 
 For finding the events based on the given parameters in the `/` page.
 
-#### [Event Details](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/#event-details-v2)
+#### [Event ViewProfile](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/#event-details-v2)
 
 Showing the event details on selecting an event.
 
