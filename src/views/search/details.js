@@ -168,7 +168,7 @@ const Details = () => {
 														 className="rounded"
 														 width="50px" alt=""/>
 											</div>
-											<div className="col">
+											<div className="col-7">
 												<div>
 													<Link to={`/profile/${item.user._id}`} className="text-dark">
 														<strong>{item.user.firstName + " " + item.user.lastName}</strong>

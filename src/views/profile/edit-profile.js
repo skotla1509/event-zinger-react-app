@@ -1,152 +1,74 @@
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './index.css';
-import {findEventDetailsByIdThunk} from "../../thunks/search-thunks";
-import {addCommentThunk, findCommentsByEventIdThunk} from "../../thunks/comments-thunks";
-import {
-	findInterestsByEventIdThunk,
-	markInterestedThunk
-} from "../../thunks/people-interested-thunks";
-import {Helper} from "../../constants/constants";
-import {profileThunk} from "../../thunks/users-thunks";
+import {findCommentsByUserThunk} from "../../thunks/comments-thunks";
+import {findInterestsByUserThunk} from "../../thunks/people-interested-thunks";
+import {findUserByIdThunk, profileThunk} from "../../thunks/users-thunks";
 
-const EditProfile = () => {
-	const {eventId} = useParams()
-	const [comment, setReview] = useState('')
+const ViewProfile = () => {
+	const {userId} = useParams()
 	const {comments} = useSelector((state) => state.comments);
-	const {interestedUsers} = useSelector((state) => state.interests);
-	const {details} = useSelector((state) => state.search)
-	const {currentUser} = useSelector((state) => state.users)
+	const {interestedEvents} = useSelector((state) => state.interests);
+	const {currentUser, publicProfile} = useSelector((state) => state.users)
 	const dispatch = useDispatch();
+
 	useEffect(() => {
-		dispatch(profileThunk())
-		dispatch(findEventDetailsByIdThunk(eventId))
-		dispatch(findCommentsByEventIdThunk(eventId))
-		dispatch(findInterestsByEventIdThunk(eventId))
+		dispatch(profileThunk());
+		dispatch(findUserByIdThunk(userId));
+		dispatch(findInterestsByUserThunk(userId));
+		dispatch(findCommentsByUserThunk(userId));
 	}, []);
 
-	let isCurrentUserInterested = false;
-	if (interestedUsers.find((item) => item.user._id === currentUser._id)) {
-		isCurrentUserInterested = true;
-	}
-
-	const handlePostReviewBtn = async () => {
-		await dispatch(addCommentThunk(
-			{
-				comment,
-				event: {
-					eventId: details.id,
-					name: details.name,
-					img: details.img
-				}
-			}
-		));
-		dispatch(findCommentsByEventIdThunk(eventId))
-	}
-
-	const handleMarkInterested = async () => {
-		await dispatch(markInterestedThunk(
-			{
-				event: {
-					eventId: details.id,
-					name: details.name,
-					img: details.img
-				}
-			}
-		));
-		dispatch(findInterestsByEventIdThunk(eventId))
+	let isCurrentUserProfile = false;
+	if (publicProfile && currentUser && publicProfile._id === currentUser._id) {
+		isCurrentUserProfile = true;
 	}
 
 	return (
 		<div className="container">
-			<div className="row">
-				<div className="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
-					<img src={details.img} className="card-img-top rounded" height="350px" width="200px"
-							 alt=""/>
+			<div className="row mt-4">
+				<div className="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+					<div>
+						<img src={"../../images/" + publicProfile.avatar} className="rounded-circle" width="100%"
+								 alt=""/>
+					</div>
+					<div className="pt-2 text-center">
+						<h4 className="text-secondary">@{publicProfile.userName}</h4>
+						<div>
+							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
+															 className="pt-1"/>
+							<span className="px-2">Joined on</span>
+						</div>
+					</div>
+
 				</div>
-				<div className="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
+				<div className="col-8 col-sm-8 col-md-8 col-lg-10 col-xl-10">
 					<div className="row d-flex flex-column">
 						<div className="col mt-2">
 							<div style={{color: "rgb(144,78,186)"}}>
-								<h2><strong>{details.name}</strong></h2>
+								<h2><strong>{publicProfile.firstName} {publicProfile.lastName}</strong></h2>
 							</div>
 						</div>
-						<div className="col mt-4">
-							<div className="row">
-								<div className="col-auto">
-									<FontAwesomeIcon icon="fa-solid fa-location-dot" className="font-size-20px pt-1"/>
-								</div>
-								<div className="col">
-									<div>
-										<strong>Venue</strong>
-									</div>
-									<div>
-										<span>{details.address}</span>
-									</div>
-									<div>
-										<span>{details.city}, {details.state}</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="col mt-4">
-							<div className="row">
-								<div className="col-auto">
-									<FontAwesomeIcon icon="fa-solid fa-calendar-days"
-																	 className="font-size-20px pt-1"/>
-								</div>
-								<div className="col">
-									<div>
-										<strong>When</strong>
-									</div>
-									<div>
-										<span>{Helper.formatDate(details.date)}</span>
-									</div>
-								</div>
-							</div>
+						<div className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-4">
+
 						</div>
 					</div>
 					{
 						currentUser &&
 						<div className="row d-flex flex-column">
 							<div className="col mt-4">
-								<div className="row">
-									{
-										isCurrentUserInterested &&
-										<>
-											<div className="col-auto">
-												<FontAwesomeIcon icon="fa-solid fa-star"
-																				 className="text-warning font-size-20px"/>
-											</div>
-											<div className="col">
-												<span>Marked interested</span>
-											</div>
-										</>
-									}
-									{
-										!isCurrentUserInterested &&
-										<>
-											<div className="col-auto">
-												<FontAwesomeIcon icon="fa-solid fa-star" onClick={handleMarkInterested}
-																				 className="font-size-20px"/>
-											</div>
-											<div className="col">
-												<span>Mark as interested</span>
-											</div>
-										</>
-									}
-								</div>
-							</div>
-							<div className="col mt-4">
-								<span>
-									<button type="button"
-													style={{backgroundColor: "rgb(144,78,186)"}}
-													className="btn m-2 w-25 rounded-pill text-white">
-										See tickets</button>
-								</span>
+								{
+									isCurrentUserProfile &&
+									<>
+										<button type="button"
+														style={{backgroundColor: "rgb(144,78,186)"}}
+														className="btn m-2 rounded-pill text-white">
+											Edit profile</button>
+									</>
+								}
 							</div>
 						</div>
 					}
@@ -155,32 +77,25 @@ const EditProfile = () => {
 			<div className="mt-4 row border-secondary border-2 border-top"></div>
 			<div className="row align-items-start">
 				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
-					<h4>People interested</h4>
+					<h4>Events interested</h4>
 					<ul className="list-group">
 						{
-							interestedUsers.map(
+							interestedEvents.map(
 								(item, index) =>
-									<li className="list-group-item" key={"interested-" + item.user._id + "-" + index}>
+									<li className="list-group-item" key={"interested-" + item.event._id + "-" + index}>
 										<div className="row align-items-center">
-											<div className="col-auto">
-												<img src={"../../images/" + item.user.avatar}
-														 className="rounded"
-														 width="50px" alt=""/>
-											</div>
-											<div className="col">
+
+											<div className="col-8">
 												<div>
-													<Link to={`/profile/${item.user._id}`} className="text-dark">
-														<strong>{item.user.firstName + " " + item.user.lastName}</strong>
+													<Link to={`/profile/${item.event.eventId}`} className="text-dark">
+														<strong>{item.event.name}</strong>
 													</Link>
 												</div>
-												<div>
-													<i>@{item.user.userName}</i>
-												</div>
 											</div>
-											<div className="col">
-												<Link to={`/profile/${item.user._id}`} className="float-end">
-													View
-												</Link>
+											<div className="col-4">
+												<img src={item.event.img}
+														 className="rounded"
+														 width="100px" alt=""/>
 											</div>
 										</div>
 									</li>
@@ -189,62 +104,36 @@ const EditProfile = () => {
 					</ul>
 				</div>
 				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
-					<h4>People attended</h4>
+					<h4>Events attended</h4>
 					<ul className="list-group">
-						<li>Attending 1</li>
-						<li>Attending 2</li>
+						<li className="list-group-item">Attending 1</li>
+						<li className="list-group-item">Attending 2</li>
 					</ul>
 				</div>
 				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
 					<h4>Comments</h4>
-					{
-						currentUser &&
-						<>
-							<div className="mt-2 row">
-
-								{
-									currentUser &&
-									<div className="row mt-2 mb-2">
-										<div className="col-10">
-                        <textarea
-													onChange={(e) => setReview(e.target.value)}
-													placeholder="Write new comment"
-													className="form-control">
-                        </textarea>
-										</div>
-										<div className="col-2">
-											<button className="btn btn-primary rounded"
-															onClick={handlePostReviewBtn}>Post
-											</button>
-										</div>
-									</div>
-
-								}
-							</div>
-						</>
-					}
 					<ul className="list-group">
 						{
 							comments.map(
 								(item, index) =>
-									<li className="list-group-item" key={"comments-" + item.user._id + "-" + index}>
+									<li className="list-group-item" key={"comments-" + item.event._id + "-" + index}>
 										<div className="row align-items-center">
-											<div className="col-auto">
-												<img src={"../../images/" + item.user.avatar}
-														 className="rounded"
-														 width="50px" alt=""/>
-											</div>
-											<div className="col">
+
+											<div className="col-8">
 												<div>
-													<Link to={`/profile/${item.user._id}`} className="text-dark">
-														<strong>{item.user.firstName + " " + item.user.lastName}</strong>
+													<Link to={`/profile/${item.event.eventId}`} className="text-dark">
+														<strong>{item.event.name}</strong>
 													</Link>
-													<i className="px-2">@{item.user.userName}</i>
 												</div>
 												<div>
-													<i>Says </i>
+													<i>You said </i>
 													"{item.comment}"
 												</div>
+											</div>
+											<div className="col-4">
+												<img src={item.event.img}
+														 className="rounded"
+														 width="100px" alt=""/>
 											</div>
 										</div>
 									</li>
@@ -256,4 +145,4 @@ const EditProfile = () => {
 		</div>
 	)
 }
-export default EditProfile
+export default ViewProfile
