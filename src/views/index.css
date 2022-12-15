@@ -1,0 +1,8 @@
+.nav-pills {
+    --bs-nav-pills-link-active-bg: rgb(144,78,186) !important;
+}
+.nav {
+    --bs-nav-link-color: rgb(144,78,186) !important;
+    --bs-nav-link-hover-color: #6f42c1 !important;
+}
+

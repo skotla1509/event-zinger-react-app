@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
 import {useSelector} from "react-redux";
-
+import './index.css';
 const Navigation = () => {
     const {currentUser} = useSelector((state) => state.users)
     const {pathname} = useLocation()

@@ -13,8 +13,7 @@ const Search = () => {
   }, []);
 
   return (
-    <>
-      <h1>Event Search</h1>
+    <div className="mt-4">
       <ul className="list-group">
         <li className="list-group-item">
           <button
@@ -66,7 +65,7 @@ const Search = () => {
           )
         }
       </ul>
-    </>
+    </div>
   )
 }
 

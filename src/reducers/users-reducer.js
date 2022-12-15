@@ -8,7 +8,6 @@ import {
   profileThunk,
   registerThunk, updateProfileThunk
 } from "../thunks/users-thunks";
-import {Gender} from "../constants/constants";
 
 const usersReducer = createSlice(
   {
@@ -16,7 +15,7 @@ const usersReducer = createSlice(
     initialState: {
       users: [],
       loading: false,
-      currentUser: {},
+      currentUser: null,
       registerSuccess: false,
       loginSuccess: false,
       passwordChangeSuccess: false,

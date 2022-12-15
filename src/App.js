@@ -8,7 +8,7 @@ library.add(fas);
 
 function App() {
   return (
-    <div className="container">
+    <div className="container mt-4  bg-light rounded border">
       <View/>
     </div>
   );

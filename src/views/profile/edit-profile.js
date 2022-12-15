@@ -1,4 +1,3 @@
-import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -6,17 +5,19 @@ import './index.css';
 import Required from "../components/required";
 import {Gender} from "../../constants/constants";
 import {setErrorMessage} from "../../reducers/users-reducer";
-import {findUserByIdThunk, profileThunk, updateProfileThunk} from "../../thunks/users-thunks";
-import {findInterestsByUserThunk} from "../../thunks/people-interested-thunks";
-import {findCommentsByUserThunk} from "../../thunks/comments-thunks";
+import {profileThunk, updateProfileThunk} from "../../thunks/users-thunks";
 
 const EditProfile = () => {
-	const {currentUser, errorMessage, loading} = useSelector((state) => state.users);
+	let {currentUser, errorMessage, loading} = useSelector((state) => state.users);
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(profileThunk());
 	}, []);
 
+	if (!currentUser) {
+		currentUser = {}
+	}
 	const [user, setUser] = useState(
 		{
 			firstName: currentUser.firstName,
@@ -64,11 +65,11 @@ const EditProfile = () => {
 			<div className="row mt-4">
 				<div className="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
 					<div>
-						<img src={"../../images/" + user.avatar} className="rounded-circle" width="100%"
+						<img src={"../../images/" + currentUser.avatar} className="rounded-circle" width="100%"
 								 alt=""/>
 					</div>
 					<div className="pt-2 text-center">
-						<h4 className="text-secondary">@{user.userName}</h4>
+						<h4 className="text-secondary">@{currentUser.userName}</h4>
 						<div>
 							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
 															 className="pt-1"/>

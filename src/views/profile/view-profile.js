@@ -168,7 +168,7 @@ const ViewProfile = () => {
 
 											<div className="col-8">
 												<div>
-													<Link to={`/profile/${item.event.eventId}`} className="text-dark">
+													<Link to={`/details/${item.event.eventId}`} className="text-dark">
 														<strong>{item.event.name}</strong>
 													</Link>
 												</div>
@@ -202,7 +202,7 @@ const ViewProfile = () => {
 
 											<div className="col-8">
 												<div>
-													<Link to={`/profile/${item.event.eventId}`} className="text-dark">
+													<Link to={`/details/${item.event.eventId}`} className="text-dark">
 														<strong>{item.event.name}</strong>
 													</Link>
 												</div>

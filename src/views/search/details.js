@@ -1,6 +1,6 @@
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './index.css';
@@ -12,17 +12,18 @@ import {
 } from "../../thunks/people-interested-thunks";
 import {Helper} from "../../constants/constants";
 import {profileThunk} from "../../thunks/users-thunks";
+import Tickets from "./tickets";
 
 const Details = () => {
 	const {eventId} = useParams()
 	const [comment, setReview] = useState('')
+	const [showTickets, setShowTickets] = useState(false);
 	const {comments} = useSelector((state) => state.comments);
 	const {interestedUsers} = useSelector((state) => state.interests);
 	const {details} = useSelector((state) => state.search)
 	const {currentUser} = useSelector((state) => state.users)
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log("USEEEEEEEEEEEEEEEEEE");
 		dispatch(profileThunk())
 		dispatch(findEventDetailsByIdThunk(eventId))
 		dispatch(findCommentsByEventIdThunk(eventId))
@@ -62,7 +63,7 @@ const Details = () => {
 	}
 
 	return (
-		<div className="container">
+		<div className="mt-4">
 			<div className="row">
 				<div className="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
 					<img src={details.img} className="card-img-top rounded" height="350px" width="200px"
@@ -142,12 +143,13 @@ const Details = () => {
 								</div>
 							</div>
 							<div className="col mt-4">
-								<span>
-									<button type="button"
-													style={{backgroundColor: "rgb(144,78,186)"}}
-													className="btn m-2 w-25 rounded-pill text-white">
-										See tickets</button>
-								</span>
+								<button type="button"
+												style={{backgroundColor: "rgb(144,78,186)"}}
+												className="btn m-2 w-25 rounded-pill text-white">
+									See tickets</button>
+								{
+									showTickets && <Tickets/>
+								}
 							</div>
 						</div>
 					}
