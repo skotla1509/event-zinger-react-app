@@ -40,7 +40,7 @@ function Tuiter() {
             <Routes>
               <Route index element={<Home/>}/>
               <Route path="/profile/:userId" element={<ViewProfile/>}/>
-              <Route path="/edit-profile/:userId" element={<EditProfile/>}/>
+              <Route path="/edit-profile" element={<EditProfile/>}/>
               <Route path="/search" element={<Search/>}/>
               <Route path="/details/:eventId" element={<Details/>}/>
               <Route path="/login" element={<Login/>}/>

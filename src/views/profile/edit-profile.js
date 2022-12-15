@@ -1,259 +1,289 @@
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './index.css';
-import {findEventDetailsByIdThunk} from "../../thunks/search-thunks";
-import {addCommentThunk, findCommentsByEventIdThunk} from "../../thunks/comments-thunks";
-import {
-	findInterestsByEventIdThunk,
-	markInterestedThunk
-} from "../../thunks/people-interested-thunks";
-import {Helper} from "../../constants/constants";
-import {profileThunk} from "../../thunks/users-thunks";
+import Required from "../components/required";
+import {Gender} from "../../constants/constants";
+import {setErrorMessage} from "../../reducers/users-reducer";
+import {findUserByIdThunk, profileThunk, updateProfileThunk} from "../../thunks/users-thunks";
+import {findInterestsByUserThunk} from "../../thunks/people-interested-thunks";
+import {findCommentsByUserThunk} from "../../thunks/comments-thunks";
 
 const EditProfile = () => {
-	const {eventId} = useParams()
-	const [comment, setReview] = useState('')
-	const {comments} = useSelector((state) => state.comments);
-	const {interestedUsers} = useSelector((state) => state.interests);
-	const {details} = useSelector((state) => state.search)
-	const {currentUser} = useSelector((state) => state.users)
+	const {currentUser, errorMessage, loading} = useSelector((state) => state.users);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(profileThunk())
-		dispatch(findEventDetailsByIdThunk(eventId))
-		dispatch(findCommentsByEventIdThunk(eventId))
-		dispatch(findInterestsByEventIdThunk(eventId))
+		dispatch(profileThunk());
 	}, []);
 
-	let isCurrentUserInterested = false;
-	if (interestedUsers.find((item) => item.user._id === currentUser._id)) {
-		isCurrentUserInterested = true;
+	const [user, setUser] = useState(
+		{
+			firstName: currentUser.firstName,
+			lastName: currentUser.lastName,
+			gender: currentUser.gender,
+			addressLine1: currentUser.addressLine1,
+			addressLine2: currentUser.addressLine2,
+			city: currentUser.city,
+			state: currentUser.state,
+			country: currentUser.country,
+			pinCode: currentUser.pinCode
+		});
+
+	if (!Object.keys(currentUser).length) {
+		return(
+			<>
+				<h3>403 Unauthorized</h3>
+			</>
+		)
 	}
 
-	const handlePostReviewBtn = async () => {
-		await dispatch(addCommentThunk(
-			{
-				comment,
-				event: {
-					eventId: details.id,
-					name: details.name,
-					img: details.img
-				}
-			}
-		));
-		dispatch(findCommentsByEventIdThunk(eventId))
-	}
+	const spaceBetween = "mt-3";
+	const updateFormData = (field, value) => {
+		const newUser = {...user};
+		newUser[field] = value;
+		setUser(newUser);
+	};
 
-	const handleMarkInterested = async () => {
-		await dispatch(markInterestedThunk(
-			{
-				event: {
-					eventId: details.id,
-					name: details.name,
-					img: details.img
-				}
-			}
-		));
-		dispatch(findInterestsByEventIdThunk(eventId))
+	const handleSaveChanges = () => {
+		const error = validateForm(user);
+		if (error) {
+			dispatch(setErrorMessage(error));
+		} else {
+			dispatch(setErrorMessage(""));
+			dispatch(updateProfileThunk(
+				{
+					userId: currentUser._id,
+					updates: user
+				}));
+		}
 	}
 
 	return (
 		<div className="container">
-			<div className="row">
-				<div className="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
-					<img src={details.img} className="card-img-top rounded" height="350px" width="200px"
-							 alt=""/>
+			<div className="row mt-4">
+				<div className="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+					<div>
+						<img src={"../../images/" + user.avatar} className="rounded-circle" width="100%"
+								 alt=""/>
+					</div>
+					<div className="pt-2 text-center">
+						<h4 className="text-secondary">@{user.userName}</h4>
+						<div>
+							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
+															 className="pt-1"/>
+							<span className="px-2">Joined on</span>
+						</div>
+					</div>
+
 				</div>
-				<div className="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
+				<div className="col-8 col-sm-8 col-md-8 col-lg-10 col-xl-10">
 					<div className="row d-flex flex-column">
-						<div className="col mt-2">
-							<div style={{color: "rgb(144,78,186)"}}>
-								<h2><strong>{details.name}</strong></h2>
-							</div>
-						</div>
-						<div className="col mt-4">
+						<div className="col-12 mt-4">
 							<div className="row">
-								<div className="col-auto">
-									<FontAwesomeIcon icon="fa-solid fa-location-dot" className="font-size-20px pt-1"/>
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-first-name"
+												 className="form-label">First Name</label>
+									<Required/>
+									<input id="register-first-name"
+												 className="form-control"
+												 value={user.firstName}
+												 onChange={(e) => updateFormData("firstName",
+																												 e.target.value)}
+												 placeholder="Enter first name"/>
 								</div>
-								<div className="col">
-									<div>
-										<strong>Venue</strong>
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-last-name"
+												 className="form-label">Last Name</label>
+									<Required/>
+									<input id="register-last-name"
+												 className="form-control"
+												 value={user.lastName}
+												 onChange={(e) => updateFormData("lastName",
+																												 e.target.value)}
+												 placeholder="Enter last name"/>
+								</div>
+							</div>
+							<div className="row">
+								<div className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<span>Gender </span>
+									<Required/>
+								</div>
+								<div className={`col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2 ${spaceBetween}`}>
+									<div className="form-check form-check-inline m-1">
+										<input className="form-check-input"
+													 type="radio"
+													 name="register-gender" id="male"
+													 onClick={() => updateFormData("gender",
+																												 Gender.MALE)}
+													 value={Gender.MALE}/>
+										<label className="form-check-label"
+													 htmlFor="register-gender">
+											Male
+										</label>
 									</div>
-									<div>
-										<span>{details.address}</span>
-									</div>
-									<div>
-										<span>{details.city}, {details.state}</span>
+								</div>
+								<div className={`col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2 ${spaceBetween}`}>
+									<div className="form-check form-check-inline m-1">
+										<input className="form-check-input"
+													 type="radio"
+													 name="register-gender" id="female"
+													 onClick={() => updateFormData("gender",
+																												 Gender.FEMALE)}
+													 value={Gender.FEMALE}/>
+										<label className="form-check-label"
+													 htmlFor="register-gender">
+											Female
+										</label>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div className="col mt-4">
 							<div className="row">
-								<div className="col-auto">
-									<FontAwesomeIcon icon="fa-solid fa-calendar-days"
-																	 className="font-size-20px pt-1"/>
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-address-line1"
+												 className="form-label">Address Line 1</label>
+									<Required/>
+									<input id="register-address-line1"
+												 className="form-control"
+												 value={user.addressLine1}
+												 onChange={(e) => updateFormData("addressLine1",
+																												 e.target.value)}
+												 placeholder="Edit address line 1"/>
 								</div>
-								<div className="col">
-									<div>
-										<strong>When</strong>
-									</div>
-									<div>
-										<span>{Helper.formatDate(details.date)}</span>
-									</div>
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-address-line2"
+												 className="form-label">Address Line 2</label>
+									<input id="register-address-line2"
+												 className="form-control"
+												 value={user.addressLine2}
+												 onChange={(e) => updateFormData("addressLine2",
+																												 e.target.value)}
+												 placeholder="Edit address line 2"/>
+								</div>
+							</div>
+							<div className="row">
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-city"
+												 className="form-label">City</label>
+									<Required/>
+									<input id="register-city"
+												 className="form-control"
+												 value={user.city}
+												 onChange={(e) => updateFormData("city",
+																												 e.target.value)}
+												 placeholder="Edit city"/>
+								</div>
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-state"
+												 className="form-label">State</label>
+									<Required/>
+									<input id="register-state"
+												 value={user.state}
+												 onChange={(e) => updateFormData("state",
+																												 e.target.value)}
+												 className="form-control"
+												 placeholder="Edit state"/>
+								</div>
+							</div>
+							<div className="row">
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-country"
+												 className="form-label">Country</label>
+									<Required/>
+									<input id="register-country"
+												 value={user.country}
+												 onChange={(e) => updateFormData("country",
+																												 e.target.value)}
+												 className="form-control"
+												 placeholder="Edit country"/>
+								</div>
+								<div
+									className={`col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ${spaceBetween}`}>
+									<label htmlFor="register-pincode"
+												 className="form-label">Zip/Postal Code</label>
+									<Required/>
+									<input id="register-pincode"
+												 value={user.pinCode}
+												 onChange={(e) => updateFormData("pinCode",
+																												 e.target.value)}
+												 className="form-control"
+												 placeholder="Edit zip code"/>
 								</div>
 							</div>
 						</div>
 					</div>
 					{
-						currentUser &&
-						<div className="row d-flex flex-column">
-							<div className="col mt-4">
-								<div className="row">
-									{
-										isCurrentUserInterested &&
-										<>
-											<div className="col-auto">
-												<FontAwesomeIcon icon="fa-solid fa-star"
-																				 className="text-warning font-size-20px"/>
-											</div>
-											<div className="col">
-												<span>Marked interested</span>
-											</div>
-										</>
-									}
-									{
-										!isCurrentUserInterested &&
-										<>
-											<div className="col-auto">
-												<FontAwesomeIcon icon="fa-solid fa-star" onClick={handleMarkInterested}
-																				 className="font-size-20px"/>
-											</div>
-											<div className="col">
-												<span>Mark as interested</span>
-											</div>
-										</>
-									}
+						errorMessage &&
+						<div className={`row + ${spaceBetween}`}>
+							<div className="col">
+								<div className="text-danger">{errorMessage}</div>
+								<div className="text-danger">Please fix above errors
+									to proceed to next step.
 								</div>
-							</div>
-							<div className="col mt-4">
-								<span>
-									<button type="button"
-													style={{backgroundColor: "rgb(144,78,186)"}}
-													className="btn m-2 w-25 rounded-pill text-white">
-										See tickets</button>
-								</span>
 							</div>
 						</div>
 					}
-				</div>
-			</div>
-			<div className="mt-4 row border-secondary border-2 border-top"></div>
-			<div className="row align-items-start">
-				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
-					<h4>People interested</h4>
-					<ul className="list-group">
-						{
-							interestedUsers.map(
-								(item, index) =>
-									<li className="list-group-item" key={"interested-" + item.user._id + "-" + index}>
-										<div className="row align-items-center">
-											<div className="col-auto">
-												<img src={"../../images/" + item.user.avatar}
-														 className="rounded"
-														 width="50px" alt=""/>
-											</div>
-											<div className="col">
-												<div>
-													<Link to={`/profile/${item.user._id}`} className="text-dark">
-														<strong>{item.user.firstName + " " + item.user.lastName}</strong>
-													</Link>
-												</div>
-												<div>
-													<i>@{item.user.userName}</i>
-												</div>
-											</div>
-											<div className="col">
-												<Link to={`/profile/${item.user._id}`} className="float-end">
-													View
-												</Link>
-											</div>
-										</div>
-									</li>
-							)
-						}
-					</ul>
-				</div>
-				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
-					<h4>People attended</h4>
-					<ul className="list-group">
-						<li>Attending 1</li>
-						<li>Attending 2</li>
-					</ul>
-				</div>
-				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
-					<h4>Comments</h4>
-					{
-						currentUser &&
-						<>
-							<div className="mt-2 row">
-
-								{
-									currentUser &&
-									<div className="row mt-2 mb-2">
-										<div className="col-10">
-                        <textarea
-													onChange={(e) => setReview(e.target.value)}
-													placeholder="Write new comment"
-													className="form-control">
-                        </textarea>
-										</div>
-										<div className="col-2">
-											<button className="btn btn-primary rounded"
-															onClick={handlePostReviewBtn}>Post
-											</button>
-										</div>
-									</div>
-
-								}
-							</div>
-						</>
-					}
-					<ul className="list-group">
-						{
-							comments.map(
-								(item, index) =>
-									<li className="list-group-item" key={"comments-" + item.user._id + "-" + index}>
-										<div className="row align-items-center">
-											<div className="col-auto">
-												<img src={"../../images/" + item.user.avatar}
-														 className="rounded"
-														 width="50px" alt=""/>
-											</div>
-											<div className="col">
-												<div>
-													<Link to={`/profile/${item.user._id}`} className="text-dark">
-														<strong>{item.user.firstName + " " + item.user.lastName}</strong>
-													</Link>
-													<i className="px-2">@{item.user.userName}</i>
-												</div>
-												<div>
-													<i>Says </i>
-													"{item.comment}"
-												</div>
-											</div>
-										</div>
-									</li>
-							)
-						}
-					</ul>
+					<div className="row d-flex flex-column">
+						<div className="col mt-4">
+							{
+								loading &&
+								<button type="button"
+												disabled
+												className="btn btn-secondary">
+									...loading
+								</button>
+							}
+							{
+								!loading &&
+								<button type="button"
+												onClick={handleSaveChanges}
+												style={{backgroundColor: "rgb(144,78,186)"}}
+												className="btn m-2 rounded-pill text-white">
+									Save changes</button>
+							}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	)
+
 }
+
+const validateForm = (formData) => {
+	let errorMessage = "";
+	if (!formData.firstName) {
+		errorMessage += "First Name is missing! ";
+	}
+	if (!formData.lastName) {
+		errorMessage += "Last Name is missing! ";
+	}
+	if (!formData.gender) {
+		errorMessage += "Gender is missing! ";
+	}
+	if (!formData.addressLine1) {
+		errorMessage += "Address Line 1 is missing! ";
+	}
+	if (!formData.city) {
+		errorMessage += "City is missing! ";
+	}
+	if (!formData.state) {
+		errorMessage += "State is missing! ";
+	}
+	if (!formData.country) {
+		errorMessage += "Country is missing! ";
+	}
+	if (!formData.pinCode) {
+		errorMessage += "Zip Code is missing! ";
+	}
+	return errorMessage;
+}
+
 export default EditProfile

@@ -1,12 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    changePasswordThunk,
-    findAllUsersThunk,
-    findUserByIdThunk,
-    loginThunk,
-    logoutThunk,
-    profileThunk,
-    registerThunk
+  changePasswordThunk,
+  findAllUsersThunk,
+  findUserByIdThunk,
+  loginThunk,
+  logoutThunk,
+  profileThunk,
+  registerThunk, updateProfileThunk
 } from "../thunks/users-thunks";
 import {Gender} from "../constants/constants";
 
@@ -16,10 +16,11 @@ const usersReducer = createSlice(
     initialState: {
       users: [],
       loading: false,
-      currentUser: null,
+      currentUser: {},
       registerSuccess: false,
       loginSuccess: false,
       passwordChangeSuccess: false,
+      updateSuccess: false,
       errorMessage: '',
       publicProfile: {}
     },
@@ -74,6 +75,19 @@ const usersReducer = createSlice(
       [changePasswordThunk.rejected]: (state, action) => {
         state.loading = false;
         state.errorMessage = "Sorry, we are not able to locate you. Please re-check information.";
+      },
+      [updateProfileThunk.pending]: (state, action) => {
+        state.loading = true;
+      },
+      [updateProfileThunk.fulfilled]: (state, action) => {
+        state.updateSuccess = true;
+        state.currentUser = action.payload;
+        state.errorMessage = "";
+        state.loading = false;
+      },
+      [updateProfileThunk.rejected]: (state, action) => {
+        state.loading = false;
+        state.errorMessage = "Sorry,something went wrong. Please try again later!.";
       },
       [findAllUsersThunk.fulfilled]: (state, action) => {
         state.users = action.payload

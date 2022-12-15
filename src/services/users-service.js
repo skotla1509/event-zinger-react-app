@@ -19,6 +19,11 @@ export const changePassword = async (user) => {
   return response.data;
 }
 
+export const updateProfile = async (updatesObj) => {
+  const response = await api.put(`${USERS_API}/${updatesObj.userId}`, updatesObj.updates)
+  return response.data;
+}
+
 export const login = async (user) => {
   const response = await api.post(`${Constants.API_BASE}/login`, user)
   return response.data

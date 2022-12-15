@@ -1,7 +1,7 @@
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './index.css';
 import {findCommentsByUserThunk} from "../../thunks/comments-thunks";
@@ -14,7 +14,7 @@ const ViewProfile = () => {
 	const {interestedEvents} = useSelector((state) => state.interests);
 	const {currentUser, publicProfile} = useSelector((state) => state.users)
 	const dispatch = useDispatch();
-
+  const navigate = useNavigate();
 	useEffect(() => {
 		dispatch(profileThunk());
 		dispatch(findUserByIdThunk(userId));
@@ -29,57 +29,127 @@ const ViewProfile = () => {
 
 	return (
 		<div className="container">
-			<div className="row">
-				<div className="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
-					<img src={"../../images/" + publicProfile.avatar} className="card-img-top rounded" height="350px" width="200px"
-							 alt=""/>
+			<div className="row mt-4">
+				<div className="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+					<div>
+						<img src={"../../images/" + publicProfile.avatar} className="rounded-circle" width="100%"
+								 alt=""/>
+					</div>
+					<div className="pt-2 text-center">
+						<h4 className="text-secondary">@{publicProfile.userName}</h4>
+						<div>
+							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
+															 className="pt-1"/>
+							<span className="px-2">Joined on</span>
+						</div>
+					</div>
+
 				</div>
-				<div className="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
+				<div className="col-8 col-sm-8 col-md-8 col-lg-10 col-xl-10">
 					<div className="row d-flex flex-column">
 						<div className="col mt-2">
 							<div style={{color: "rgb(144,78,186)"}}>
-								<h2><strong>{publicProfile.userName}</strong></h2>
+								<h2><strong>{publicProfile.firstName} {publicProfile.lastName}</strong></h2>
 							</div>
 						</div>
-						<div className="col mt-4">
-							<div className="row">
-								<div className="col-auto">
-									<FontAwesomeIcon icon="fa-solid fa-location-dot" className="font-size-20px pt-1"/>
-								</div>
-								<div className="col">
-									{publicProfile.firstName}
-									{publicProfile.lastName}
-								</div>
-							</div>
-						</div>
-						<div className="col mt-4">
-							<div className="row">
-								<div className="col-auto">
-									<FontAwesomeIcon icon="fa-solid fa-calendar-days"
-																	 className="font-size-20px pt-1"/>
-								</div>
-								<div className="col">
-									{publicProfile.firstName}
-									{publicProfile.lastName}
-								</div>
-							</div>
+						<div className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-4">
+							<ul className="list-group list-group-flush">
+								<li className="list-group-item d-flex justify-content-between align-items-center">
+									{
+										isCurrentUserProfile &&
+										<span>
+												<FontAwesomeIcon icon="fa-solid fa-star"
+																				 style={{width: "20px"}}
+																				 className="text-warning px-2" />
+												Events you marked as interested
+										</span>
+									}
+									{
+										!isCurrentUserProfile &&
+										<span>
+												<FontAwesomeIcon icon="fa-solid fa-star"
+																				 style={{width: "20px"}}
+																				 className="text-warning px-2" />
+												Events marked as interested
+										</span>
+									}
+									<span className="badge badge-primary badge-pill bg-primary">
+											{
+												interestedEvents.length
+											}
+										</span>
+								</li>
+								<li className="list-group-item d-flex justify-content-between align-items-center">
+									{
+										isCurrentUserProfile &&
+										<span>
+											<FontAwesomeIcon icon="fa-solid fa-clipboard-user"
+																			 style={{width: "20px"}}
+																			 className="text-primary px-2" />
+											Events you attended
+										</span>
+									}
+									{
+										!isCurrentUserProfile &&
+										<span>
+												<FontAwesomeIcon icon="fa-solid fa-clipboard-user"
+																				 style={{width: "20px"}}
+																				 className="text-primary px-2" />
+												Events attended
+										</span>
+									}
+									<span className="badge badge-primary badge-pill bg-primary">
+											{
+												0
+											}
+										</span>
+								</li>
+								<li className="list-group-item d-flex justify-content-between align-items-center">
+									{
+										isCurrentUserProfile &&
+										<span>
+											<FontAwesomeIcon icon="fa-solid fa-clock-rotate-left"
+																			 style={{width: "20px"}}
+																			 className="text-info px-2"/>
+												Your recent activity
+										</span>
+									}
+									{
+										!isCurrentUserProfile &&
+										<span>
+											<FontAwesomeIcon icon="fa-solid fa-clock-rotate-left"
+																			 style={{width: "20px"}}
+																			 className="text-info px-2"/>
+												Recent activity
+										</span>
+									}
+									<span className="badge badge-primary badge-pill bg-primary">
+											{
+												comments.length
+											}
+										</span>
+								</li>
+							</ul>
 						</div>
 					</div>
 					{
 						currentUser &&
 						<div className="row d-flex flex-column">
 							<div className="col mt-4">
-								<div className="row">
-									{
-										isCurrentUserProfile &&
-										<>
-											<button type="button"
-															style={{backgroundColor: "rgb(144,78,186)"}}
-															className="btn m-2 w-25 rounded-pill text-white">
-												Edit profile</button>
-										</>
-									}
-								</div>
+								{
+									isCurrentUserProfile &&
+									<>
+										<button type="button"
+														onClick = {
+															() => {
+																navigate('/edit-profile/')
+															}
+														}
+														style={{backgroundColor: "rgb(144,78,186)"}}
+														className="btn m-2 rounded-pill text-white">
+											Edit profile</button>
+									</>
+								}
 							</div>
 						</div>
 					}
@@ -95,17 +165,18 @@ const ViewProfile = () => {
 								(item, index) =>
 									<li className="list-group-item" key={"interested-" + item.event._id + "-" + index}>
 										<div className="row align-items-center">
-											<div className="col-auto">
-												<img src={"../../images/" + item.event.img}
-														 className="rounded"
-														 width="50px" alt=""/>
-											</div>
-											<div className="col">
+
+											<div className="col-8">
 												<div>
 													<Link to={`/profile/${item.event.eventId}`} className="text-dark">
 														<strong>{item.event.name}</strong>
 													</Link>
 												</div>
+											</div>
+											<div className="col-4">
+												<img src={item.event.img}
+														 className="rounded"
+														 width="100px" alt=""/>
 											</div>
 										</div>
 									</li>
@@ -128,12 +199,8 @@ const ViewProfile = () => {
 								(item, index) =>
 									<li className="list-group-item" key={"comments-" + item.event._id + "-" + index}>
 										<div className="row align-items-center">
-											<div className="col-auto">
-												<img src={"../../images/" + item.event.img}
-														 className="rounded"
-														 width="50px" alt=""/>
-											</div>
-											<div className="col">
+
+											<div className="col-8">
 												<div>
 													<Link to={`/profile/${item.event.eventId}`} className="text-dark">
 														<strong>{item.event.name}</strong>
@@ -143,6 +210,11 @@ const ViewProfile = () => {
 													<i>You said </i>
 													"{item.comment}"
 												</div>
+											</div>
+											<div className="col-4">
+												<img src={item.event.img}
+														 className="rounded"
+														 width="100px" alt=""/>
 											</div>
 										</div>
 									</li>
