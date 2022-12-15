@@ -142,7 +142,7 @@ const ViewProfile = () => {
 										<button type="button"
 														onClick = {
 															() => {
-																navigate('/edit-profile/'+userId)
+																navigate('/edit-profile/')
 															}
 														}
 														style={{backgroundColor: "rgb(144,78,186)"}}

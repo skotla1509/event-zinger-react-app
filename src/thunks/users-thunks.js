@@ -6,7 +6,7 @@ import {
 	login,
 	logout,
 	profile,
-	register
+	register, updateProfile
 } from "../services/users-service";
 
 export const logoutThunk = createAsyncThunk(
@@ -44,4 +44,9 @@ export const findAllUsersThunk = createAsyncThunk(
 export const changePasswordThunk = createAsyncThunk(
   'changePassword',
   async (user) => await changePassword(user)
+)
+
+export const updateProfileThunk = createAsyncThunk(
+	'updateProfile',
+	async (updatesObj) => await updateProfile(updatesObj)
 )
