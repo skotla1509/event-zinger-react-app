@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {findEventsBySearchTermThunk} from "../../thunks/search-thunks";
 import {Helper} from "../../constants/constants";
+import {setSearchTerm} from "../../reducers/search-reducer";
 
 const Search = () => {
-  const [searchTerm, setSearchTerm] = useState('Sports');
-  const {events, loading} = useSelector((state) => state.search);
+  const {events, searchTerm, loading} = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -26,7 +26,7 @@ const Search = () => {
           <input
             className="form-control w-75"
             onChange={(e) => {
-              setSearchTerm(e.target.value)
+              dispatch(setSearchTerm(e.target.value))
             }}
             value={searchTerm}/>
         </li>

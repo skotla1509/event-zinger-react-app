@@ -11,15 +11,22 @@ const Navigation = () => {
       <div className="mt-4">
         <ul className="nav nav-pills">
           <li className="nav-item">
+            <Link to="/">
+              <img src="../../images/logo_2.png"
+                   className="rounded p-0" height="60px" width="90px"
+                   alt="" />
+            </Link>
+          </li>
+          <li className="nav-item ps-2">
             <Link to="/"
                   className={`nav-link ${parts[1] === ''?'active': ''}`}>
-              Home
+              <h3>Home</h3>
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/search"
                   className={`nav-link ${parts[1] === 'search'?'active': ''}`}>
-              Search
+              <h3>Search</h3>
             </Link>
           </li>
           {
@@ -27,20 +34,20 @@ const Navigation = () => {
             <li className="nav-item">
               <Link to="/users"
                     className={`nav-link ${parts[1] === 'users'?'active': ''}`}>
-                Users
+                <h3>Users</h3>
               </Link>
             </li>
           }
           <li className={`nav-item ${currentUser ? 'd-none':''}`}>
             <Link to="/login"
                   className={`nav-link ${parts[1] === 'login'?'active': ''}`}>
-              Login
+              <h3>Login</h3>
             </Link>
           </li>
           <li className={`nav-item ${currentUser ? 'd-none':''}`}>
             <Link to="/register"
                   className={`nav-link ${parts[1] === 'register'?'active': ''}`}>
-              Register
+              <h3>Register</h3>
             </Link>
           </li>
           {
@@ -48,7 +55,7 @@ const Navigation = () => {
             <li className="nav-item">
               <Link to={"/profile/" + currentUser._id}
                     className={`nav-link ${parts[1] === 'profile'?'active': ''}`}>
-                Profile
+                <h3>Profile</h3>
               </Link>
             </li>
           }

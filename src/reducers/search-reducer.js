@@ -4,6 +4,7 @@ import {findEventDetailsByIdThunk, findEventsBySearchTermThunk} from "../thunks/
 const initialState = {
 	events: [],
 	loading: false,
+	searchTerm: 'Concerts',
 	details: {}
 }
 
@@ -11,6 +12,11 @@ const searchReducer = createSlice(
 	{
 		name: 'search',
 		initialState,
+		reducers: {
+			setSearchTerm(state, action) {
+				state.searchTerm = action.payload;
+			}
+		},
 		extraReducers: {
 			[findEventsBySearchTermThunk.pending]: (state, action) => {
 				state.loading = true;
@@ -77,4 +83,5 @@ const parseEvents = (payload) => {
 	return eventsObj;
 }
 
+export const {setSearchTerm} = searchReducer.actions;
 export default searchReducer.reducer

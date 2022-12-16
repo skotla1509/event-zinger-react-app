@@ -2,16 +2,32 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import './index.css';
 import {findAllEventsThunk} from "../../thunks/events-thunks";
-import {Container ,Card, Col, Button} from 'react-bootstrap';
+import {Card, Button} from 'react-bootstrap';
+import {setSearchTerm} from "../../reducers/search-reducer";
+import {useNavigate} from "react-router-dom";
+import {findAllTransactionsByUserThunk} from "../../thunks/tickets-thunks";
 
 
 const Home = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {currentUser} = useSelector((state) => state.users);
+  const {transactions} = useSelector((state) => state.tickets);
 
   useEffect(() => {
-    dispatch(findAllEventsThunk());
+    if (currentUser) {
+      dispatch(findAllTransactionsByUserThunk(currentUser._id));
+    }
   },[]);
+
+  const redirectToSearch = (searchTerm) => {
+    dispatch(setSearchTerm(searchTerm));
+    navigate("/search");
+  }
+
+  const redirectToEvent = (eventId) => {
+    navigate("/details/" + eventId);
+  }
 
     return(
         <>
@@ -31,14 +47,50 @@ const Home = () => {
               </div>
             </div>
           </div>
+          {
+            currentUser && transactions && transactions.length > 0 &&
+            <div className="row m-4">
+              <h4 className="mb-2">Recent activity</h4>
+              {
+                transactions.map(
+                  (item, index) => {
+                    if (item.event && index < 5) {
+                      return (
+                        <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                          <Card>
+                            <Card.Img variant="top" src={item.event.img}/>
+                            <Card.Body>
+                              <Button variant=""
+                                      onClick={() => {
+                                        if (item.event) {
+                                          redirectToEvent(item.event.eventId)
+                                        }
+                                      }}>
+                                <h5>{item.event.name}</h5>
+                                <div>
+                                  <span>{item.type === "BUY" ? "You bought" : "You sold"} </span>
+                                  <i>"{item.tickets} tickets"</i>
+                                </div>
+                              </Button>
+                            </Card.Body>
+                          </Card>
+                        </div>
+                      )
+                    }
+                  }
+                )
+              }
+            </div>
+          }
           <div className="row m-4">
             <h4 className="mb-2">Browse by category</h4>
             <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
                 <Card.Img variant="top" src="../../images/concert.png" />
                 <Card.Body>
-                  <Card.Title>Concerts</Card.Title>
-                  <Button variant="secondary">Read More</Button>
+                  <Button variant="" onClick={() => redirectToSearch("Concerts")}>
+                    <h5>Concerts</h5>
+                  </Button>
                 </Card.Body>
               </Card>
             </div>
@@ -46,8 +98,9 @@ const Home = () => {
               <Card>
                 <Card.Img variant="top" src="../../images/sports1.png" />
                 <Card.Body>
-                  <Card.Title>Sports</Card.Title>
-                  <Button variant="secondary">Read More</Button>
+                  <Button variant="" onClick={() => redirectToSearch("Sports")}>
+                    <h5>Sports</h5>
+                  </Button>
                 </Card.Body>
               </Card>
             </div>
@@ -55,8 +108,9 @@ const Home = () => {
               <Card>
                 <Card.Img variant="top" src="../../images/arts.png" />
                 <Card.Body>
-                  <Card.Title>Arts and Theatre</Card.Title>
-                  <Button variant="secondary">Read More</Button>
+                  <Button variant="" onClick={() => redirectToSearch("Theatre")}>
+                    <h5>Arts & Theatre</h5>
+                  </Button>
                 </Card.Body>
               </Card>
             </div>
@@ -64,9 +118,9 @@ const Home = () => {
               <Card>
                 <Card.Img variant="top" src="../../images/family3.png" />
                 <Card.Body>
-                  <Card.Title>Family</Card.Title>
-                  <Button variant="secondary">
-                    Read More</Button>
+                  <Button variant="" onClick={() => redirectToSearch("Family")}>
+                    <h5>Family</h5>
+                  </Button>
                 </Card.Body>
               </Card>
             </div>
