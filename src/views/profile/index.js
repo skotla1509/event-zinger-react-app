@@ -13,8 +13,7 @@ const Profile = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log("USEEEEEEEEEEEEEEEEEE");
-		dispatch(findUserByIdThunk(userId))
+		dispatch()
 	}, []);
 
 	if (parts[1].includes("edit")) {

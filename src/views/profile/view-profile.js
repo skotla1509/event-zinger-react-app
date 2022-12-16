@@ -15,15 +15,14 @@ import {
 import {findAllTransactionsByUserThunk} from "../../thunks/tickets-thunks";
 import {Gender, Helper} from "../../constants/constants";
 import Required from "../components/required";
-import {setErrorMessage} from "../../reducers/users-reducer";
+import {resetUpdateStatus, setErrorMessage, setIsEdit} from "../../reducers/users-reducer";
 
 const ViewProfile = () => {
 	const {userId} = useParams()
 	const {comments} = useSelector((state) => state.comments);
 	const {interestedEvents} = useSelector((state) => state.interests);
-	const {currentUser, publicProfile, errorMessage, loading} = useSelector((state) => state.users)
+	const {currentUser, publicProfile, errorMessage, loading, isEdit, updateSuccess} = useSelector((state) => state.users)
 	const {transactions} = useSelector((state) => state.tickets);
-	const [isEdit, setIsEdit] = useState(false);
 	const [user, setUser] = useState(currentUser);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -55,11 +54,12 @@ const ViewProfile = () => {
 			dispatch(setErrorMessage(""));
 			await dispatch(updateProfileThunk(
 				{
-					userId: currentUser._id,
+					userId: user._id,
 					updates: {
 						firstName: user.firstName,
 						lastName: user.lastName,
 						gender: user.gender,
+						avatar: Helper.getAvatarFromGender(user.gender),
 						addressLine1: user.addressLine1,
 						addressLine2: user.addressLine2,
 						city: user.city,
@@ -68,7 +68,8 @@ const ViewProfile = () => {
 						pinCode: user.pinCode
 					}
 				}));
-			setIsEdit(false);
+			dispatch(findUserByIdThunk(userId));
+			// setIsEdit(false);
 		}
 	}
 
@@ -193,7 +194,8 @@ const ViewProfile = () => {
 												<button type="button"
 																onClick={
 																	() => {
-																		setIsEdit(true);
+																		// dispatch(resetUpdateStatus());
+																		dispatch(setIsEdit(true));
 																		// navigate('/edit-profile/')
 																	}
 																}
@@ -391,6 +393,15 @@ const ViewProfile = () => {
 														className="btn m-2 rounded-pill text-white">
 											Save changes</button>
 									}
+									<button type="button"
+													onClick={() => {
+														setUser(currentUser);
+														setIsEdit(false);
+														dispatch(resetUpdateStatus())
+													}}
+													style={{backgroundColor: "rgb(144,78,186)"}}
+													className="btn m-2 rounded-pill text-white">
+										Cancel</button>
 								</div>
 							</div>
 						</>
