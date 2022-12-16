@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from "react-router-dom";
 import Required from "../components/required";
-import {Gender, UserRoles} from "../../constants/constants";
+import {Gender, Helper, UserRoles} from "../../constants/constants";
 import {Navigate} from "react-router";
 import {registerThunk} from "../../thunks/users-thunks";
 import {setErrorMessage} from "../../reducers/users-reducer";
@@ -53,7 +53,7 @@ const Register = () => {
       dispatch(setErrorMessage(error));
     } else {
       dispatch(setErrorMessage(""));
-      user.avatar = (user.gender === Gender.MALE) ? "male-avatar.png" : "female-avatar.png";
+      user.avatar = Helper.getAvatarFromGender(user.gender);
       dispatch(registerThunk(user));
     }
   };

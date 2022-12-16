@@ -37,4 +37,13 @@ export class Helper {
             default: return "NA";
         }
     }
+
+    static getAvatarFromGender = (gender) => {
+        if (gender === Gender.MALE) {
+            return "male-avatar.png"
+        }
+        else {
+            return "female-avatar.png"
+        }
+    }
 }

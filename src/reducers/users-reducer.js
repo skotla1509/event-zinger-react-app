@@ -20,12 +20,21 @@ const usersReducer = createSlice(
       loginSuccess: false,
       passwordChangeSuccess: false,
       updateSuccess: false,
+      isEdit: false,
       errorMessage: '',
       publicProfile: {}
     },
     reducers: {
       setErrorMessage(state, action) {
         state.errorMessage = action.payload;
+      },
+      setIsEdit(state, action) {
+        state.isEdit = action.payload;
+      },
+      resetUpdateStatus(state, action) {
+        state.isEdit = false;
+        state.errorMessage = "";
+        state.updateSuccess = false;
       }
     },
     extraReducers: {
@@ -76,12 +85,12 @@ const usersReducer = createSlice(
         state.errorMessage = "Sorry, we are not able to locate you. Please re-check information.";
       },
       [updateProfileThunk.pending]: (state, action) => {
-        state.currentUser = action.payload.updated;
         state.loading = true;
       },
       [updateProfileThunk.fulfilled]: (state, action) => {
         state.updateSuccess = true;
-        state.currentUser = action.payload;
+        state.isEdit = false;
+        state.currentUser = action.payload.updated;
         state.errorMessage = "";
         state.loading = false;
       },
@@ -100,5 +109,5 @@ const usersReducer = createSlice(
   }
 )
 
-export const {setErrorMessage} = usersReducer.actions;
+export const {setErrorMessage,setIsEdit, resetUpdateStatus} = usersReducer.actions;
 export default usersReducer.reducer
