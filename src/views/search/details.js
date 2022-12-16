@@ -134,13 +134,13 @@ const Details = () => {
 	}
 
 	return (
-		<div className="mt-4">
+		<div className="m-4">
 			<div className="row">
-				<div className="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
-					<img src={details.img} className="card-img-top rounded" height="350px" width="200px"
+				<div className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+					<img src={details.img} className="card-img-top rounded" height="400px" width="250px"
 							 alt=""/>
 				</div>
-				<div className="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
+				<div className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 					<div className="row d-flex flex-column">
 						<div className="col mt-2">
 							<div style={{color: "rgb(144,78,186)"}}>

@@ -14,7 +14,7 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="mt-4">
+    <div className="m-4">
       <ul className="list-group">
         <li className="list-group-item">
           <button

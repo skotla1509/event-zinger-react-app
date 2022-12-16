@@ -53,7 +53,7 @@ const Navigation = () => {
           {
             currentUser &&
             <li className="nav-item">
-              <Link to={"/profile/" + currentUser._id}
+              <Link to={"/profile"}
                     className={`nav-link ${parts[1] === 'profile'?'active': ''}`}>
                 <h3>Profile</h3>
               </Link>

@@ -1,33 +1,49 @@
 import React from "react";
-import {useEffect, useState} from "react";
-import {useLocation, useParams} from "react-router";
-import EditProfile from "./edit-profile";
-import ViewProfile from "./view-profile";
-import {findUserByIdThunk} from "../../thunks/users-thunks";
-import {useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {useParams} from "react-router";
+import {findUserByIdThunk, profileThunk} from "../../thunks/users-thunks";
+import {useDispatch, useSelector} from "react-redux";
+import CurrentProfile from "./current-profile";
+import PublicProfile from "./public-profile";
+import {Navigate} from "react-router-dom";
 
 const Profile = () => {
-	const {pathname} = useLocation()
 	const {userId} = useParams();
-	const parts = pathname.split('/');
+	const {currentUser, publicProfile} = useSelector((state) => state.users)
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch()
+		dispatch(profileThunk());
+		if (userId) {
+			dispatch(findUserByIdThunk(userId))
+		}
 	}, []);
 
-	if (parts[1].includes("edit")) {
+	if (!userId && !currentUser) {
 		return (
-			<>
-				<h1>Profile</h1>
-			</>
+			<Navigate to="/login" />
 		)
 	}
-	return (
-		<>
-			<h1>Edit Profile</h1>
-		</>
-	);
+	else if (!userId && currentUser) {
+		return (
+			<CurrentProfile/>
+		)
+	}
+	else if (userId && !publicProfile) {
+		return (
+			<h3>My backend systems are down. Apologize for the inconvenience.</h3>
+		)
+	}
+	else if (currentUser && currentUser._id === publicProfile._id) {
+		return (
+			<CurrentProfile/>
+		)
+	}
+	else {
+		return (
+			<PublicProfile userId={userId}/>
+		)
+	}
 }
 
 export default Profile;

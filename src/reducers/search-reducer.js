@@ -43,7 +43,7 @@ const searchReducer = createSlice(
 )
 
 const parseDetails = (payload) => {
-	const imageObj = payload.images.find((item) => item.ratio === "16_9");
+	const imageObj = payload.images.find((item) => item.ratio === "3_2");
 	const datesObj = (payload.dates && payload.dates.start) || null;
 	const locationObj = payload._embedded && payload._embedded.venues && payload._embedded.venues.length
 											> 0 ? payload._embedded.venues[0] : null;

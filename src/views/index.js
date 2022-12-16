@@ -19,6 +19,7 @@ import ViewProfile from "./profile/view-profile";
 import EditProfile from "./profile/edit-profile";
 import ticketsReducer from "../reducers/tickets-reducer";
 import Users from "./users";
+import Profile from "./profile";
 
 const store = configureStore(
   {
@@ -41,8 +42,8 @@ function Tuiter() {
         <Navigation/>
             <Routes>
               <Route index element={<Home/>}/>
-              <Route path="/profile/:userId" element={<ViewProfile/>}/>
-              <Route path="/edit-profile" element={<EditProfile/>}/>
+              <Route path="/profile" element={<Profile/>}/>
+              <Route path="/profile/:userId" element={<Profile/>}/>
               <Route path="/search" element={<Search/>}/>
               <Route path="/details/:eventId" element={<Details/>}/>
               <Route path="/login" element={<Login/>}/>

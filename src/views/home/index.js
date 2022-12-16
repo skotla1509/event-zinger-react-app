@@ -6,6 +6,7 @@ import {Card, Button} from 'react-bootstrap';
 import {setSearchTerm} from "../../reducers/search-reducer";
 import {useNavigate} from "react-router-dom";
 import {findAllTransactionsByUserThunk} from "../../thunks/tickets-thunks";
+import {profileThunk} from "../../thunks/users-thunks";
 
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
   const {transactions} = useSelector((state) => state.tickets);
 
   useEffect(() => {
+    dispatch(profileThunk());
     if (currentUser) {
       dispatch(findAllTransactionsByUserThunk(currentUser._id));
     }
