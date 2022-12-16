@@ -21,7 +21,7 @@ const FooterProfile = ({userId}) => {
 
 
 	return (
-		<div className="row align-items-start">
+		<div className="row align-items-start mb-4">
 			<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
 				<h4>Recent activity</h4>
 				<ul className="list-group">
