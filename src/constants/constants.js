@@ -18,7 +18,13 @@ export class Gender {
 
 export class Helper {
     static formatDate = (date) => {
-        const dateObj = new Date(date + "T12:00:00Z");
+        const dateObj = new Date(date + "T00:00:00Z");
+        const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+        return dateObj.toLocaleDateString("en-us", options);
+    }
+
+    static formatDateFromTimeStamp = (timeStamp) => {
+        const dateObj = new Date(timeStamp);
         const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
         return dateObj.toLocaleDateString("en-us", options);
     }

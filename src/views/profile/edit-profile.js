@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './index.css';
 import Required from "../components/required";
-import {Gender} from "../../constants/constants";
+import {Gender, Helper} from "../../constants/constants";
 import {setErrorMessage} from "../../reducers/users-reducer";
 import {profileThunk, updateProfileThunk} from "../../thunks/users-thunks";
 
@@ -74,6 +74,7 @@ const EditProfile = () => {
 							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
 															 className="pt-1"/>
 							<span className="px-2">Joined on</span>
+							<i>"{currentUser.dateOfJoining ? Helper.formatDateFromTimeStamp(currentUser.dateOfJoining) : "NA"}"</i>
 						</div>
 					</div>
 

@@ -38,7 +38,7 @@ const Users = () => {
 												</div>
 												<div>
 													<span>Joined on: </span>
-													<i>"{item.dateOfJoining ? Helper.formatDate(item.dateOfJoining) : "NA"}"</i>
+													<i>"{item.dateOfJoining ? Helper.formatDateFromTimeStamp(item.dateOfJoining) : "NA"}"</i>
 												</div>
 												<div>
 													<span>User Role: </span>

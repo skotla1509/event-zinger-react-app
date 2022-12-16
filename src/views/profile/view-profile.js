@@ -45,7 +45,7 @@ const ViewProfile = () => {
 							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
 															 className="pt-1"/>
 							<span className="px-2">Joined on</span>
-							<div>{publicProfile.dateOfJoining ? Helper.formatDate(publicProfile.dateOfJoining) : "NA"}</div>
+							<div>{publicProfile.dateOfJoining ? Helper.formatDateFromTimeStamp(publicProfile.dateOfJoining) : "NA"}</div>
 						</div>
 					</div>
 
