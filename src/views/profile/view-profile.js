@@ -8,6 +8,7 @@ import {findCommentsByUserThunk} from "../../thunks/comments-thunks";
 import {findInterestsByUserThunk} from "../../thunks/people-interested-thunks";
 import {findUserByIdThunk, logoutThunk, profileThunk} from "../../thunks/users-thunks";
 import {findAllTransactionsByUserThunk} from "../../thunks/tickets-thunks";
+import {Helper} from "../../constants/constants";
 
 const ViewProfile = () => {
 	const {userId} = useParams()
@@ -44,6 +45,7 @@ const ViewProfile = () => {
 							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
 															 className="pt-1"/>
 							<span className="px-2">Joined on</span>
+							<div>{publicProfile.dateOfJoining ? Helper.formatDate(publicProfile.dateOfJoining) : "NA"}</div>
 						</div>
 					</div>
 
