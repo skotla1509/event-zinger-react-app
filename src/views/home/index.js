@@ -35,49 +35,38 @@ const Home = () => {
             <h4 className="mb-2">Browse by category</h4>
             <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/concert.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Concerts</Card.Title>
+                  <Button variant="secondary">Read More</Button>
                 </Card.Body>
               </Card>
             </div>
             <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/sports1.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Sports</Card.Title>
+                  <Button variant="secondary">Read More</Button>
                 </Card.Body>
               </Card>
             </div>
             <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/arts.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Arts and Theatre</Card.Title>
+                  <Button variant="secondary">Read More</Button>
                 </Card.Body>
               </Card>
             </div>
             <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/family3.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Family</Card.Title>
+                  <Button variant="secondary">
+                    Read More</Button>
                 </Card.Body>
               </Card>
             </div>
