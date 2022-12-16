@@ -8,7 +8,6 @@ import Home from "./home";
 import {BrowserRouter} from "react-router-dom";
 import CurrentUser from "./current-user";
 import Navigation from "./navigation";
-import Profile from "./profile";
 import Search from "./search";
 import Details from "./search/details";
 import usersReducer from "../reducers/users-reducer";
@@ -18,6 +17,7 @@ import interestsReducer from "../reducers/people-interested-reducer";
 import eventsReducer from "../reducers/events-reducer";
 import ViewProfile from "./profile/view-profile";
 import EditProfile from "./profile/edit-profile";
+import ticketsReducer from "../reducers/tickets-reducer";
 
 const store = configureStore(
   {
@@ -26,7 +26,8 @@ const store = configureStore(
       search: searchReducer,
       allEvents: eventsReducer,
       comments: commentsReducer,
-      interests: interestsReducer
+      interests: interestsReducer,
+      tickets: ticketsReducer
     }
   }
 )

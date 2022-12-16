@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
 import {useSelector} from "react-redux";
 import './index.css';
+import {UserRoles} from "../constants/constants";
 const Navigation = () => {
     const {currentUser} = useSelector((state) => state.users)
     const {pathname} = useLocation()
@@ -21,12 +22,15 @@ const Navigation = () => {
               Search
             </Link>
           </li>
-          <li className={`nav-item ${!currentUser ? 'd-none':''}`}>
-            <Link to="/users"
-                  className={`nav-link ${parts[1] === 'users'?'active': ''}`}>
-              Users
-            </Link>
-          </li>
+          {
+            currentUser && currentUser.userRole === UserRoles.SYSTEM_ADMIN &&
+            <li className="nav-item">
+              <Link to="/users"
+                    className={`nav-link ${parts[1] === 'users'?'active': ''}`}>
+                Users
+              </Link>
+            </li>
+          }
           <li className={`nav-item ${currentUser ? 'd-none':''}`}>
             <Link to="/login"
                   className={`nav-link ${parts[1] === 'login'?'active': ''}`}>
@@ -39,12 +43,15 @@ const Navigation = () => {
               Register
             </Link>
           </li>
-          <li className={`nav-item ${!currentUser ? 'd-none':''}`}>
-            <Link to="/profile"
-                  className={`nav-link ${parts[1] === 'profile'?'active': ''}`}>
-              Profile
-            </Link>
-          </li>
+          {
+            currentUser &&
+            <li className="nav-item">
+              <Link to={"/profile/" + currentUser._id}
+                    className={`nav-link ${parts[1] === 'profile'?'active': ''}`}>
+                Profile
+              </Link>
+            </li>
+          }
         </ul>
       </div>
     )
