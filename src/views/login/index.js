@@ -7,7 +7,7 @@ import { changePasswordThunk, loginThunk } from "../../thunks/users-thunks";
 import {setErrorMessage} from "../../reducers/users-reducer";
 
 const Login = () => {
-  const {loginSuccess, passwordChangeSuccess, errorMessage, loading} = useSelector((state) => state.users);
+  const {currentUser, loginSuccess, passwordChangeSuccess, errorMessage, loading} = useSelector((state) => state.users);
   const [user, setUser] = useState(
     {
       userName: '',
@@ -31,7 +31,7 @@ const Login = () => {
     navigate("/register");
   };
 
-  if (loginSuccess) {
+  if (currentUser) {
     return (<Navigate to={'/'}/>)
   }
 

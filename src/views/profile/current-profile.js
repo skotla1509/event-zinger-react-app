@@ -159,7 +159,7 @@ const CurrentProfile = () => {
 										<button type="button"
 														onClick={() => {
 															dispatch(logoutThunk());
-															navigate('/')
+															navigate("/")
 														}
 														}
 														style={{backgroundColor: "rgb(144,78,186)"}}
