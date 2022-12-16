@@ -36,17 +36,17 @@ const Search = () => {
             (event) =>
               <li key={event.id} className="list-group-item">
                   <div className="row align-items-center">
-                      <div className="col-2">
+                      <div className="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
                           <img src={event.img} className="card-img-top rounded" height="100px" width="100px" alt=""/>
                       </div>
 
-                      <div className="col-2">
+                      <div className="col-8 col-sm-8 col-md-8 col-lg-2 col-xl-2">
                           <div style={{color: "rgb(144,78,186)"}}>
                               <strong>{Helper.formatDate(event.date)}</strong>
                           </div>
                       </div>
 
-                      <div className="col-6">
+                      <div className="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                           <Link to={`/details/${event.id}`} className="text-dark">
                               <strong>{event.name}</strong>
                           </Link>
@@ -54,7 +54,7 @@ const Search = () => {
                               {event.location}
                           </div>
                       </div>
-                      <div className="col-2">
+                      <div className="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2">
                           <button type="button"
                                   onClick={() => {
                                     navigate(`/details/${event.id}`)

@@ -69,7 +69,7 @@ const CurrentProfile = () => {
 	}
 
 	return (
-		<div className="container">
+		<div className="m-4">
 			<div className="row mt-4">
 				<div className="col-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
 					<div>
@@ -212,6 +212,7 @@ const CurrentProfile = () => {
 												<input className="form-check-input"
 															 type="radio"
 															 name="register-gender" id="male"
+															 checked={user.gender === Gender.MALE}
 															 onClick={() => updateFormData("gender",
 																														 Gender.MALE)}
 															 value={Gender.MALE}/>
@@ -226,6 +227,7 @@ const CurrentProfile = () => {
 												<input className="form-check-input"
 															 type="radio"
 															 name="register-gender" id="female"
+															 checked={user.gender === Gender.FEMALE}
 															 onClick={() => updateFormData("gender",
 																														 Gender.FEMALE)}
 															 value={Gender.FEMALE}/>
