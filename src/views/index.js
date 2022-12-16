@@ -18,6 +18,7 @@ import eventsReducer from "../reducers/events-reducer";
 import ViewProfile from "./profile/view-profile";
 import EditProfile from "./profile/edit-profile";
 import ticketsReducer from "../reducers/tickets-reducer";
+import Users from "./users";
 
 const store = configureStore(
   {
@@ -46,6 +47,7 @@ function Tuiter() {
               <Route path="/details/:eventId" element={<Details/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>
+              <Route path="/users" element={<Users/>}/>
             </Routes>
       </CurrentUser>
     </BrowserRouter>

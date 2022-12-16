@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-  changePasswordThunk,
+  changePasswordThunk, deleteUserThunk,
   findAllUsersThunk,
   findUserByIdThunk,
   loginThunk,
@@ -91,6 +91,9 @@ const usersReducer = createSlice(
       [findAllUsersThunk.fulfilled]: (state, action) => {
         state.users = action.payload
         state.loading = false
+      },
+      [deleteUserThunk.fulfilled]: (state, action) => {
+        state.users = state.users.filter((item) => item._id !== action.payload.deleted);
       }
     }
   }

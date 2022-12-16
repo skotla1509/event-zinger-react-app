@@ -19,6 +19,16 @@ export class Gender {
 export class Helper {
     static formatDate = (date) => {
         const dateObj = new Date(date + "T12:00:00Z");
-        return dateObj.toDateString();
+        const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+        return dateObj.toLocaleDateString("en-us", options);
+    }
+
+    static getRoleName = (role) => {
+        switch (role) {
+            case UserRoles.CUSTOMER: return "Customer";
+            case UserRoles.EVENT_MANAGER: return "Event Manager";
+            case UserRoles.SYSTEM_ADMIN: return "Administrator";
+            default: return "NA";
+        }
     }
 }

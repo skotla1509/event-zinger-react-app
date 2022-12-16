@@ -2,6 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {findEventsBySearchTermThunk} from "../../thunks/search-thunks";
+import {Helper} from "../../constants/constants";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('Sports');
@@ -41,7 +42,7 @@ const Search = () => {
 
                       <div className="col-2">
                           <div style={{color: "rgb(144,78,186)"}}>
-                              <strong>{event.date}</strong>
+                              <strong>{Helper.formatDate(event.date)}</strong>
                           </div>
                       </div>
 

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {
-	changePassword,
+	changePassword, deleteUser,
 	findAllUsers,
 	findUserById,
 	login,
@@ -49,4 +49,9 @@ export const changePasswordThunk = createAsyncThunk(
 export const updateProfileThunk = createAsyncThunk(
 	'updateProfile',
 	async (updatesObj) => await updateProfile(updatesObj)
+)
+
+export const deleteUserThunk = createAsyncThunk(
+	'deleteUser',
+	async (user) => await deleteUser(user)
 )

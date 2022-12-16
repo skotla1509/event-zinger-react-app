@@ -24,6 +24,11 @@ export const updateProfile = async (updatesObj) => {
   return response.data;
 }
 
+export const deleteUser = async (user) => {
+  const response = await api.delete(`${USERS_API}/${user}`);
+  return response.data
+}
+
 export const login = async (user) => {
   const response = await api.post(`${Constants.API_BASE}/login`, user)
   return response.data
