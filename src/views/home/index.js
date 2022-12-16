@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import './index.css';
-import {findAllEventsThunk} from "../../thunks/events-thunks";
 import {Card, Button} from 'react-bootstrap';
 import {setSearchTerm} from "../../reducers/search-reducer";
 import {useNavigate} from "react-router-dom";
@@ -58,11 +57,12 @@ const Home = () => {
                   (item, index) => {
                     if (item.event && index < 5) {
                       return (
-                        <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div id={"activity" + index} className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                           <Card>
-                            <Card.Img variant="top" src={item.event.img}/>
-                            <Card.Body>
+                            <Card.Img id={"activity-image" + index} variant="top" src={item.event.img}/>
+                            <Card.Body id={"activity-card" + index}>
                               <Button variant=""
+                                      id={"activity-button" + index}
                                       onClick={() => {
                                         if (item.event) {
                                           redirectToEvent(item.event.eventId)

@@ -1,6 +1,6 @@
 
 export class Constants {
-    static API_BASE = 'http://localhost:1000'; // process.env.REACT_APP_API_BASE;
+    static API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:1000';
 }
 
 export class UserRoles {
