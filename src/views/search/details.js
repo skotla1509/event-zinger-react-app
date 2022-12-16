@@ -404,36 +404,7 @@ const Details = () => {
 			<div className="mt-4 row border-secondary border-2 border-top"></div>
 			<div className="row align-items-start mb-4">
 				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
-					<h4>People interested</h4>
-					<ul className="list-group">
-						{
-							interestedUsers.map(
-								(item, index) =>
-									<li className="list-group-item" key={"interested-" + item.user._id + "-" + index}>
-										<div className="row align-items-center">
-											<div className="col-auto">
-												<img src={"../../images/" + item.user.avatar}
-														 className="rounded"
-														 width="50px" alt=""/>
-											</div>
-											<div className="col">
-												<div>
-													<Link to={`/profile/${item.user._id}`} className="text-dark">
-														<strong>{item.user.firstName + " " + item.user.lastName}</strong>
-													</Link>
-												</div>
-												<div>
-													<i>@{item.user.userName}</i>
-												</div>
-											</div>
-										</div>
-									</li>
-							)
-						}
-					</ul>
-				</div>
-				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
-					<h4>People attended</h4>
+					<h4>Recent activity</h4>
 					<ul className="list-group">
 						{
 							transactions.map(
@@ -455,6 +426,35 @@ const Details = () => {
 												<div>
 													<span>{item.type === "BUY" ? "Bought" : "Sold"} </span>
 													<i>"{item.tickets} tickets"</i>
+												</div>
+											</div>
+										</div>
+									</li>
+							)
+						}
+					</ul>
+				</div>
+				<div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-4">
+					<h4>People interested</h4>
+					<ul className="list-group">
+						{
+							interestedUsers.map(
+								(item, index) =>
+									<li className="list-group-item" key={"interested-" + item.user._id + "-" + index}>
+										<div className="row align-items-center">
+											<div className="col-auto">
+												<img src={"../../images/" + item.user.avatar}
+														 className="rounded"
+														 width="50px" alt=""/>
+											</div>
+											<div className="col">
+												<div>
+													<Link to={`/profile/${item.user._id}`} className="text-dark">
+														<strong>{item.user.firstName + " " + item.user.lastName}</strong>
+													</Link>
+												</div>
+												<div>
+													<i>@{item.user.userName}</i>
 												</div>
 											</div>
 										</div>
