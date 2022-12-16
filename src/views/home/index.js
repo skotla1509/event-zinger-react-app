@@ -31,8 +31,9 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col">
+          <div className="row m-4">
+            <h4 className="mb-2">Browse by category</h4>
+            <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
                 <Card.Img variant="top" src="../../images/banner.jpg" />
                 <Card.Body>
@@ -44,7 +45,7 @@ const Home = () => {
                 </Card.Body>
               </Card>
             </div>
-            <div className="col">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
                 <Card.Img variant="top" src="../../images/banner.jpg" />
                 <Card.Body>
@@ -56,7 +57,7 @@ const Home = () => {
                 </Card.Body>
               </Card>
             </div>
-            <div className="col">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
                 <Card.Img variant="top" src="../../images/banner.jpg" />
                 <Card.Body>
@@ -68,7 +69,7 @@ const Home = () => {
                 </Card.Body>
               </Card>
             </div>
-            <div className="col">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
               <Card>
                 <Card.Img variant="top" src="../../images/banner.jpg" />
                 <Card.Body>
