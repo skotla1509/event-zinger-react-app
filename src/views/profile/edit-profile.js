@@ -6,11 +6,13 @@ import Required from "../components/required";
 import {Gender, Helper} from "../../constants/constants";
 import {setErrorMessage} from "../../reducers/users-reducer";
 import {profileThunk, updateProfileThunk} from "../../thunks/users-thunks";
+import {useNavigate} from "react-router-dom";
 
 const EditProfile = () => {
 	let {currentUser, errorMessage, loading} = useSelector((state) => state.users);
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	useEffect(() => {
 		dispatch(profileThunk());
 	}, []);
@@ -46,17 +48,18 @@ const EditProfile = () => {
 		setUser(newUser);
 	};
 
-	const handleSaveChanges = () => {
+	const handleSaveChanges = async () => {
 		const error = validateForm(user);
 		if (error) {
 			dispatch(setErrorMessage(error));
 		} else {
 			dispatch(setErrorMessage(""));
-			dispatch(updateProfileThunk(
+			await dispatch(updateProfileThunk(
 				{
 					userId: currentUser._id,
 					updates: user
 				}));
+			navigate("/profile/")
 		}
 	}
 
@@ -74,7 +77,7 @@ const EditProfile = () => {
 							<FontAwesomeIcon icon="fa-solid fa-calendar-days"
 															 className="pt-1"/>
 							<span className="px-2">Joined on</span>
-							<i>"{currentUser.dateOfJoining ? Helper.formatDateFromTimeStamp(currentUser.dateOfJoining) : "NA"}"</i>
+							<div>{currentUser.dateOfJoining ? Helper.formatDateFromTimeStamp(currentUser.dateOfJoining) : "NA"}</div>
 						</div>
 					</div>
 

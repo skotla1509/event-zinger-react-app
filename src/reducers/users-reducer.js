@@ -76,6 +76,7 @@ const usersReducer = createSlice(
         state.errorMessage = "Sorry, we are not able to locate you. Please re-check information.";
       },
       [updateProfileThunk.pending]: (state, action) => {
+        state.currentUser = action.payload.updated;
         state.loading = true;
       },
       [updateProfileThunk.fulfilled]: (state, action) => {
