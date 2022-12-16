@@ -48,7 +48,7 @@ const Details = () => {
 	}, []);
 
 	let isCurrentUserInterested = false;
-	if (interestedUsers.find((item) => item.user._id === currentUser._id)) {
+	if (currentUser && interestedUsers.find((item) => item.user._id === currentUser._id)) {
 		isCurrentUserInterested = true;
 	}
 

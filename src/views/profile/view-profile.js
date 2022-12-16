@@ -123,7 +123,7 @@ const ViewProfile = () => {
 												<FontAwesomeIcon icon="fa-solid fa-comment"
 																				 style={{width: "20px"}}
 																				 className="text-secondary px-2" />
-												Events you commented about
+												Events commented about
 										</span>
 									}
 									<span className="badge badge-primary badge-pill bg-primary">
@@ -248,8 +248,15 @@ const ViewProfile = () => {
 													</Link>
 												</div>
 												<div>
-													<i>You said </i>
-													"{item.comment}"
+													{
+														isCurrentUserProfile &&
+														<span>You said </span>
+													}
+													{
+														!isCurrentUserProfile &&
+														<span>Said </span>
+													}
+													<i>"{item.comment}"</i>
 												</div>
 											</div>
 											<div className="col-4">
