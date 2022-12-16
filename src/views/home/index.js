@@ -3,11 +3,14 @@ import {useDispatch, useSelector} from "react-redux";
 import './index.css';
 import {findAllEventsThunk} from "../../thunks/events-thunks";
 import {Container ,Card, Col, Button} from 'react-bootstrap';
+import {logoutThunk} from "../../thunks/users-thunks";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const Home = () => {
   const dispatch = useDispatch()
   const {currentUser} = useSelector((state) => state.users);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(findAllEventsThunk());
@@ -31,52 +34,90 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row mt-4 mb-4">
+            <h4>Browse by category</h4>
             <div className="col">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/concert.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Concerts</Card.Title>
+                  <Button variant="secondary">Read More</Button>
                 </Card.Body>
               </Card>
             </div>
             <div className="col">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/sports1.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Sports</Card.Title>
+                  <Button variant="secondary">Read More</Button>
                 </Card.Body>
               </Card>
             </div>
             <div className="col">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/arts.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Arts and Theatre</Card.Title>
+                  <Button variant="secondary">Read More</Button>
                 </Card.Body>
               </Card>
             </div>
             <div className="col">
               <Card>
-                <Card.Img variant="top" src="../../images/banner.jpg" />
+                <Card.Img variant="top" src="../../images/family3.png" />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae molestie magna. Vivamus sed molestie enim, eu convallis mauris. Aliquam pharetra velit ac enim maximus, a commodo augue hendrerit. Phasellus at aliquam est
-                  </Card.Text>
-                  <Button variant="primary">Read More</Button>
+                  <Card.Title>Family</Card.Title>
+                  <Button variant="secondary"
+                          onClick={() => {
+                            navigate('/')
+                          }
+                          }>
+                    Read More</Button>
+                </Card.Body>
+              </Card>
+            </div>
+          </div>
+          <div className="row mt-4 mb-4">
+            <h4>Recommended for you</h4>
+            <div className="col">
+              <Card>
+                <Card.Img variant="top" src="../../images/concert.png" />
+                <Card.Body>
+                  <Card.Title>Concert 1</Card.Title>
+                  <Button variant="secondary">Read More</Button>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className="col">
+              <Card>
+                <Card.Img variant="top" src="../../images/concert.png" />
+                <Card.Body>
+                  <Card.Title>Concert 2</Card.Title>
+                  <Button variant="secondary">Read More</Button>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className="col">
+              <Card>
+                <Card.Img variant="top" src="../../images/concert.png" />
+                <Card.Body>
+                  <Card.Title>Concert 3</Card.Title>
+                  <Button variant="secondary">Read More</Button>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className="col">
+              <Card>
+                <Card.Img variant="top" src="../../images/concert.png" />
+                <Card.Body>
+                  <Card.Title>Concert 4</Card.Title>
+                  <Button variant="secondary"
+                          onClick={() => {
+                            navigate('/')
+                          }
+                          }>
+                    Read More</Button>
                 </Card.Body>
               </Card>
             </div>
