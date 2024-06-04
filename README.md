@@ -21,3 +21,6 @@ To run this project locally, follow these steps:
 - Install dependencies using npm install.
 - Start the server using npm start.
 - Open your browser and go to http://localhost:3000 to view the application.
+
+## Connecting to the Node.js Server
+This React app communicates with a Node.js server. You can find the server repository https://github.com/skotla1509/event-zinger-node-app/tree/draft3
