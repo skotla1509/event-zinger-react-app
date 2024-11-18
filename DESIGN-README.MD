@@ -1,94 +1,130 @@
-# Codedamn Projects - Ticket Master Clone
-![main image](https://raw.githubusercontent.com/codedamn-projects/ticket-master-clone/master/designs/Display.png)
+# Event Zinger
 
-## Hello developer!
+Event Zinger is a dynamic and user-friendly ticketing platform inspired by **Ticketmaster**. It leverages Ticketmaster's API to list a wide variety of events and provide detailed information about them. Whether you're browsing as a guest or logged in as a user, manager, or administrator, Event Zinger offers a seamless and engaging experience for managing and purchasing event tickets.
 
-This is one of the many projects available on [codedamn](https://codedamn.com/projects) to reinforce your learning by building. If you want to become a full stack developer and learn by practicing, feel free to attempt this challenge. Feel free to check out the codedamn [Full Stack Web Development Learning Path](https://codedamn.com/learning-paths/fullstack) to learn more about how to become an awesome full stack developer.
+---
+
+## Features Overview
+
+Event Zinger provides a rich set of features to cater to various user roles, ensuring a seamless experience for everyone:
+
+1. **Guest Mode**:
+   - Browse events by category (Concerts, Sports, Arts & Theatre, and Family) without registration.
+   - Search for events using a keyword-based search bar.
+   - View detailed event pages with descriptions, dates, locations, and related activity.
+
+2. **Registered User Mode**:
+   - Create an account or log in to personalize the platform experience.
+   - Mark events as "interested" to save them for later viewing.
+   - Buy tickets directly through Ticketmaster’s integration.
+   - View profile information, including past purchases, comments, and interests.
+   - Edit profile to update personal details.
+
+3. **Manager Mode**:
+   - Manage listed events, including creating and adding tickets for the events.
+   - Track ticket sales and monitor event engagement statistics.
+
+4. **Admin Mode**:
+   - Oversee all platform users and events, with the ability to remove or modify entries.
+   - Access detailed analytics and insights about the platform's performance (future scope).
+   - Maintain platform security by managing user access and identifying inappropriate behavior (future scope).
+
+---
+
+## Screens Showcase
+
+### 1. Home Page
+
+**Route**: `/`  
+The **Home Page** offers a welcoming introduction and showcases categories such as:
+- **Concerts**
+- **Sports**
+- **Arts & Theatre**
+- **Family**
+
+**Guest Mode:** ![image](https://github.com/user-attachments/assets/2f6c0189-2e95-41d8-903f-775fa1fad08b)
+**User Mode:** ![image](https://github.com/user-attachments/assets/8b2342ca-41bf-47ce-a788-fb1603ab4250)
+
+---
+
+### 2. Search Page
+
+**Route**: `/search`  
+The **Search Page** enables guests to:
+- Search for events using the search bar.
+- View event listings with:
+  - Event names
+  - Dates
+  - Locations
+  - A **Details** button to learn more about each event.
+
+![image](https://github.com/user-attachments/assets/35b4ad31-6a25-47bd-a355-73ec47b98ca9)
+
+---
+
+### 3. Event Details Page
+
+**Route**: `/details/:eventId`  
+Clicking on an event directs guests to the **Event Details Page**, which includes:
+- Event image and description.
+- Detailed venue and date information.
+- **Recent Activity**: Displays ticket sales and interactions related to the event.
+- **People Interested**: Shows users who have expressed interest in the event.
+- **Comments Section**: Allows guests to view comments posted by registered users, building a sense of community.
+
+**Guest Mode:** ![image](https://github.com/user-attachments/assets/02a4cfa6-17d2-4ed7-a9e3-b81ab4d1449a)
+**User Mode** ![image](https://github.com/user-attachments/assets/3ac806ea-2ce2-43a6-b9de-e9d7aa6a80c3)
+
+---
+
+### 4. Authentication Screens
+
+**Login Page**  
+  
+**Route**: `/login`  
+
+The **Login Page** allows users to:
+- Enter their credentials (username and password).
+- Recover access using the **Forgot Password** option.
+- Navigate to the registration page if they’re new.
+![image](https://github.com/user-attachments/assets/349ab3bd-fc67-4130-871f-0f8bd0cb84ca)
+
+**Register Page**  
+
+**Route**: `/register`  
+
+The **Register Page** provides:
+- A user-friendly form to create an account.
+- Fields for entering personal details like name, gender, address, and more.
+- A seamless transition to Login page.
+
+![image](https://github.com/user-attachments/assets/aeba6426-3e3c-4c06-911d-7c3f8fa14739)
+
+---
+
+### 5. Profile Page
+
+**Route**: `/profile` or `/profile/:userId`  
+
+After logging in, users can access their **Profile Page**, which includes:
+- **Recent Activity**: A history of ticket purchases and event interactions.
+- **Events Interested**: A list of events the user has marked as "interested."
+- **Comments Section**: Displays comments the user has made on events.
+- **Edit Profile**: Allows users to update their personal details.
+
+![image](https://github.com/user-attachments/assets/a3e46e95-9b48-4da0-a546-cafdebbdecff)
+![image](https://github.com/user-attachments/assets/7fcab552-9415-4e9c-af63-0ff4d257c9a9)
 
 
-## Instructions
+---
 
-Your challenge is to build out this project and get it looking as close to the design as possible.
+### 6. Admin User
 
-You can use **any tools or technologies** you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+**Route**: `/users` 
 
-### Landing Page 
-The landing page will be shown in the `/` route. 
+Admins can:
+- View and manage all registered users.
+- Access platform-wide features.
+- Delete inappropriate or inactive users.
 
-### Sign Up
-
-The following should be implement at the `/Sign Up` route.
-
-![register page](https://raw.githubusercontent.com/codedamn-projects/ticket-master-clone/master/designs/Sign%20Up.png)
-
-### Sign In
-
-The following should be implement in the `/sign-in` route.
-
-![sign in](https://raw.githubusercontent.com/codedamn-projects/ticket-master-clone/master/designs/Sign%20In.png)
-
-
-### Search Page
-
-This page should be using the route `/search`.
-
-On searching for anything on the `/` page on getting successful data from the API. The user should be redirect to `/search` and the results from the search should be shown. 
-
-![search image](https://raw.githubusercontent.com/codedamn-projects/ticket-master-clone/master/designs/Search.png)
-
-### ViewProfile
-
-All the details retrieved from the API can be shown in the drop down menu of the event. 
-
-![details](https://raw.githubusercontent.com/codedamn-projects/ticket-master-clone/master/designs/Details.png)
-## API Routes 
-
-You will be using [Ticket master API](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/) 
-
-Please generate an API Key for using the API
-
-#### [Event Search ](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/#search-events-v2)
-
-For finding the events based on the given parameters in the `/` page.
-
-#### [Event ViewProfile](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/#event-details-v2)
-
-Showing the event details on selecting an event.
-
-### MongoDB user document
-```
-{
-    _id: ObjectId(),
-    name: <string>,
-    email: <string>,
-    password: <string>,
-    timestamp: <date>,
-    countryOfResidence: <string>,
-    zipCode: <number>
-}
-```
-
-### Ports 
-The Codedamn Playgrounds exposes only `1337` and `1338` ports on the internet. So you'll be using `localhost` for connecting to the mongodb instance as they are hosted on the same docker container. You can specify it as `localhost:27017` or simple write `localhost`. 
-
-
-Want some support on the challenge? [Join our discord community](https://cdm.sh/discord) and ask questions in the **#general** channel.
-
-There is no limit you can go beyond the mentioned criteria and create additional functionalities
-
-## Recommended Technologies 
-
-1. Mongoose for mongodb object modelling and effective type system 
-1. Tailwind CSS for User Interface
-
-## Where to find everything
-
-Your task is to build out the project as per the provided screenshots. You will find both a mobile and a desktop version of the design.
-
-The designs are in image formats can be found in `/designs`.
-
-You will find all the required required images in the `/public` folder
-
-## Send feedback!
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please visit [codedamn feedback page](https://codedamn.com/contact)
+![image](https://github.com/user-attachments/assets/2bc8d24f-839d-4139-8d14-871eb55ea699)
