@@ -15,6 +15,7 @@ The React frontend for **Event Zinger** is the user-facing component of the tick
 
 - The application is directly connected to the **Node.js server**, leveraging its APIs to fetch and display dynamic content such as event details, comments, and user profiles.
 
+NOTE: To learn more about the various features and screens of this project, refer to the DESIGN-README.md file.
 ---
 
 ## Technologies Used
